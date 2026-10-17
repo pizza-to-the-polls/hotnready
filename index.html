@@ -30,8 +30,14 @@
  .ichart { width:100%; display:block; }
  .cline { fill:none; stroke-width:2.25; }
  .l2018 { stroke:#e4572e; } .l2022 { stroke:#1f6fb2; } .l2026 { stroke:#7b3fa0; }
- .cdot { stroke:#fff; stroke-width:1; }
- .cdot.l2018 { fill:#e4572e; } .cdot.l2022 { fill:#1f6fb2; } .cdot.l2026 { fill:#7b3fa0; }
+ .mk { stroke:#fff; stroke-width:1; }
+ .mk.l2018 { fill:#e4572e; } .mk.l2022 { fill:#1f6fb2; } .mk.l2026 { fill:#7b3fa0; }
+ .hmk { stroke:#fff; stroke-width:2; fill-opacity:0.95; }
+ .hmk.l2018 { fill:#e4572e; } .hmk.l2022 { fill:#1f6fb2; } .hmk.l2026 { fill:#7b3fa0; }
+ .linesw { vertical-align:-2px; margin-right:6px; }
+ .linesw circle, .linesw rect, .linesw polygon { fill:#555; }
+ .hdot { stroke:#fff; stroke-width:1.5; fill-opacity:0.9; }
+ .hdot.l2018 { fill:#e4572e; } .hdot.l2022 { fill:#1f6fb2; } .hdot.l2026 { fill:#7b3fa0; }
  .cross { stroke:#555; stroke-width:1; stroke-dasharray:3 3; }
  .hdot { stroke:#fff; stroke-width:1.5; fill-opacity:0.9; }
  .hdot.l2018 { fill:#e4572e; } .hdot.l2022 { fill:#1f6fb2; } .hdot.l2026 { fill:#7b3fa0; }
@@ -55,7 +61,7 @@
 <div class="sub">Daily counts from production <code>pizzabase</code> (reports, orders, donations tables), bucketed by US/Eastern day. X-axes aligned on Election Day (E). Blue line = today, Sat Oct 17, 2026 — E-17 before the 2026 midterms (Tue Nov 3). Completed cycles shown E−45 → E+7; 2026 shown through today with the remaining run-up shaded.</div>
 <div class="callout"><b>Where we are today (E−17, Oct 17 2026):</b> historically this point in the cycle is near-silent — on the equivalent day, 2018 had <b>0 reports / 2 donations</b> and 2022 had <b>0 reports / 6 donations</b>. 2026 reports are similarly quiet (26 since Sept 1), but <b>2026 donations are already running ~10× the past-midterm baseline</b> (last 7 days: 51 donations, $1,212; last 14 days: 127, $4,331) — closer to how past cycles looked in the final week.</div>
 <h2>All three cycles aligned — reports, orders &amp; donations</h2>
-<div class="sub">Hover for exact daily values across all years · click the chips to toggle years/series · switch log ↔ linear scale.</div>
+<div class="sub">Markers: ● reports · ▪ orders · ◆ donations (color = election year). Hover for exact daily values across all years · click the chips to toggle years/series · switch log ↔ linear scale.</div>
 <div id="compctl"></div>
 <div id="compwrap"><div id="comp"></div><div id="tip"></div></div>
 <h2>Daily detail, cycle by cycle</h2>
@@ -93,9 +99,9 @@
 (function () {
   var D = {"years": [{"yr": 2018, "color": "#e4572e", "edate": "2018-11-06", "points": [{"k": -45, "date": "2018-09-22", "rep": 1, "ord": 1, "don": 0, "dol": 0}, {"k": -44, "date": "2018-09-23", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -43, "date": "2018-09-24", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -42, "date": "2018-09-25", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -41, "date": "2018-09-26", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -40, "date": "2018-09-27", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -39, "date": "2018-09-28", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -38, "date": "2018-09-29", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -37, "date": "2018-09-30", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -36, "date": "2018-10-01", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -35, "date": "2018-10-02", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -34, "date": "2018-10-03", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -33, "date": "2018-10-04", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -32, "date": "2018-10-05", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -31, "date": "2018-10-06", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -30, "date": "2018-10-07", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -29, "date": "2018-10-08", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -28, "date": "2018-10-09", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -27, "date": "2018-10-10", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -26, "date": "2018-10-11", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -25, "date": "2018-10-12", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -24, "date": "2018-10-13", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -23, "date": "2018-10-14", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -22, "date": "2018-10-15", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -21, "date": "2018-10-16", "rep": 0, "ord": 0, "don": 1, "dol": 19}, {"k": -20, "date": "2018-10-17", "rep": 1, "ord": 1, "don": 8, "dol": 192}, {"k": -19, "date": "2018-10-18", "rep": 1, "ord": 1, "don": 13, "dol": 297}, {"k": -18, "date": "2018-10-19", "rep": 4, "ord": 4, "don": 37, "dol": 2985}, {"k": -17, "date": "2018-10-20", "rep": 0, "ord": 0, "don": 2, "dol": 116}, {"k": -16, "date": "2018-10-21", "rep": 0, "ord": 0, "don": 3, "dol": 145}, {"k": -15, "date": "2018-10-22", "rep": 1, "ord": 1, "don": 11, "dol": 205}, {"k": -14, "date": "2018-10-23", "rep": 3, "ord": 2, "don": 5, "dol": 96}, {"k": -13, "date": "2018-10-24", "rep": 3, "ord": 1, "don": 14, "dol": 633}, {"k": -12, "date": "2018-10-25", "rep": 7, "ord": 6, "don": 69, "dol": 1879}, {"k": -11, "date": "2018-10-26", "rep": 2, "ord": 0, "don": 24, "dol": 702}, {"k": -10, "date": "2018-10-27", "rep": 0, "ord": 0, "don": 3, "dol": 48}, {"k": -9, "date": "2018-10-28", "rep": 0, "ord": 0, "don": 8, "dol": 522}, {"k": -8, "date": "2018-10-29", "rep": 0, "ord": 0, "don": 7, "dol": 114}, {"k": -7, "date": "2018-10-30", "rep": 3, "ord": 2, "don": 9, "dol": 323}, {"k": -6, "date": "2018-10-31", "rep": 2, "ord": 0, "don": 5, "dol": 261}, {"k": -5, "date": "2018-11-01", "rep": 1, "ord": 0, "don": 10, "dol": 298}, {"k": -4, "date": "2018-11-02", "rep": 10, "ord": 2, "don": 48, "dol": 1806}, {"k": -3, "date": "2018-11-03", "rep": 39, "ord": 14, "don": 357, "dol": 11203}, {"k": -2, "date": "2018-11-04", "rep": 55, "ord": 29, "don": 168, "dol": 5372}, {"k": -1, "date": "2018-11-05", "rep": 113, "ord": 57, "don": 677, "dol": 27492}, {"k": 0, "date": "2018-11-06", "rep": 2087, "ord": 697, "don": 9227, "dol": 312791}, {"k": 1, "date": "2018-11-07", "rep": 5, "ord": 3, "don": 11, "dol": 424}, {"k": 2, "date": "2018-11-08", "rep": 4, "ord": 2, "don": 3, "dol": 14}, {"k": 3, "date": "2018-11-09", "rep": 1, "ord": 1, "don": 1, "dol": 19}, {"k": 4, "date": "2018-11-10", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": 5, "date": "2018-11-11", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": 6, "date": "2018-11-12", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": 7, "date": "2018-11-13", "rep": 0, "ord": 0, "don": 0, "dol": 0}]}, {"yr": 2022, "color": "#1f6fb2", "edate": "2022-11-08", "points": [{"k": -45, "date": "2022-09-24", "rep": 0, "ord": 0, "don": 1, "dol": 9}, {"k": -44, "date": "2022-09-25", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -43, "date": "2022-09-26", "rep": 0, "ord": 1, "don": 0, "dol": 0}, {"k": -42, "date": "2022-09-27", "rep": 0, "ord": 1, "don": 0, "dol": 0}, {"k": -41, "date": "2022-09-28", "rep": 0, "ord": 2, "don": 3, "dol": 72}, {"k": -40, "date": "2022-09-29", "rep": 0, "ord": 1, "don": 2, "dol": 29}, {"k": -39, "date": "2022-09-30", "rep": 0, "ord": 0, "don": 3, "dol": 23}, {"k": -38, "date": "2022-10-01", "rep": 0, "ord": 0, "don": 2, "dol": 9}, {"k": -37, "date": "2022-10-02", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -36, "date": "2022-10-03", "rep": 0, "ord": 1, "don": 1, "dol": 315}, {"k": -35, "date": "2022-10-04", "rep": 0, "ord": 0, "don": 1, "dol": 19}, {"k": -34, "date": "2022-10-05", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -33, "date": "2022-10-06", "rep": 0, "ord": 0, "don": 1, "dol": 48}, {"k": -32, "date": "2022-10-07", "rep": 0, "ord": 1, "don": 1, "dol": 19}, {"k": -31, "date": "2022-10-08", "rep": 0, "ord": 0, "don": 1, "dol": 9}, {"k": -30, "date": "2022-10-09", "rep": 0, "ord": 0, "don": 2, "dol": 101}, {"k": -29, "date": "2022-10-10", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -28, "date": "2022-10-11", "rep": 1, "ord": 1, "don": 1, "dol": 19}, {"k": -27, "date": "2022-10-12", "rep": 0, "ord": 0, "don": 2, "dol": 14}, {"k": -26, "date": "2022-10-13", "rep": 0, "ord": 0, "don": 1, "dol": 5}, {"k": -25, "date": "2022-10-14", "rep": 0, "ord": 0, "don": 5, "dol": 81}, {"k": -24, "date": "2022-10-15", "rep": 0, "ord": 0, "don": 2, "dol": 96}, {"k": -23, "date": "2022-10-16", "rep": 0, "ord": 0, "don": 1, "dol": 9}, {"k": -22, "date": "2022-10-17", "rep": 0, "ord": 0, "don": 2, "dol": 58}, {"k": -21, "date": "2022-10-18", "rep": 0, "ord": 0, "don": 1, "dol": 19}, {"k": -20, "date": "2022-10-19", "rep": 0, "ord": 2, "don": 84, "dol": 3391}, {"k": -19, "date": "2022-10-20", "rep": 0, "ord": 0, "don": 18, "dol": 621}, {"k": -18, "date": "2022-10-21", "rep": 1, "ord": 2, "don": 10, "dol": 152}, {"k": -17, "date": "2022-10-22", "rep": 0, "ord": 0, "don": 6, "dol": 275}, {"k": -16, "date": "2022-10-23", "rep": 0, "ord": 0, "don": 4, "dol": 110}, {"k": -15, "date": "2022-10-24", "rep": 2, "ord": 2, "don": 6, "dol": 95}, {"k": -14, "date": "2022-10-25", "rep": 1, "ord": 2, "don": 10, "dol": 291}, {"k": -13, "date": "2022-10-26", "rep": 0, "ord": 9, "don": 97, "dol": 5137}, {"k": -12, "date": "2022-10-27", "rep": 0, "ord": 3, "don": 20, "dol": 5554}, {"k": -11, "date": "2022-10-28", "rep": 2, "ord": 25, "don": 57, "dol": 2268}, {"k": -10, "date": "2022-10-29", "rep": 6, "ord": 4, "don": 12, "dol": 555}, {"k": -9, "date": "2022-10-30", "rep": 1, "ord": 1, "don": 10, "dol": 570}, {"k": -8, "date": "2022-10-31", "rep": 1, "ord": 4, "don": 9, "dol": 386}, {"k": -7, "date": "2022-11-01", "rep": 6, "ord": 3, "don": 11, "dol": 604}, {"k": -6, "date": "2022-11-02", "rep": 0, "ord": 1, "don": 4, "dol": 212}, {"k": -5, "date": "2022-11-03", "rep": 8, "ord": 7, "don": 69, "dol": 3496}, {"k": -4, "date": "2022-11-04", "rep": 40, "ord": 36, "don": 50, "dol": 3454}, {"k": -3, "date": "2022-11-05", "rep": 12, "ord": 8, "don": 29, "dol": 1273}, {"k": -2, "date": "2022-11-06", "rep": 20, "ord": 8, "don": 38, "dol": 2712}, {"k": -1, "date": "2022-11-07", "rep": 21, "ord": 20, "don": 323, "dol": 20105}, {"k": 0, "date": "2022-11-08", "rep": 332, "ord": 189, "don": 1496, "dol": 82505}, {"k": 1, "date": "2022-11-09", "rep": 0, "ord": 0, "don": 10, "dol": 444}, {"k": 2, "date": "2022-11-10", "rep": 0, "ord": 0, "don": 1, "dol": 5}, {"k": 3, "date": "2022-11-11", "rep": 0, "ord": 0, "don": 1, "dol": 19}, {"k": 4, "date": "2022-11-12", "rep": 0, "ord": 0, "don": 5, "dol": 130}, {"k": 5, "date": "2022-11-13", "rep": 0, "ord": 0, "don": 1, "dol": 5}, {"k": 6, "date": "2022-11-14", "rep": 0, "ord": 0, "don": 4, "dol": 62}, {"k": 7, "date": "2022-11-15", "rep": 0, "ord": 0, "don": 0, "dol": 0}]}, {"yr": 2026, "color": "#7b3fa0", "edate": "2026-11-03", "points": [{"k": -45, "date": "2026-09-19", "rep": 0, "ord": 0, "don": 4, "dol": 125}, {"k": -44, "date": "2026-09-20", "rep": 0, "ord": 0, "don": 1, "dol": 19}, {"k": -43, "date": "2026-09-21", "rep": 0, "ord": 0, "don": 4, "dol": 107}, {"k": -42, "date": "2026-09-22", "rep": 0, "ord": 0, "don": 3, "dol": 48}, {"k": -41, "date": "2026-09-23", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -40, "date": "2026-09-24", "rep": 3, "ord": 0, "don": 15, "dol": 350}, {"k": -39, "date": "2026-09-25", "rep": 0, "ord": 0, "don": 2, "dol": 101}, {"k": -38, "date": "2026-09-26", "rep": 1, "ord": 0, "don": 25, "dol": 685}, {"k": -37, "date": "2026-09-27", "rep": 0, "ord": 0, "don": 2, "dol": 29}, {"k": -36, "date": "2026-09-28", "rep": 4, "ord": 0, "don": 3, "dol": 120}, {"k": -35, "date": "2026-09-29", "rep": 0, "ord": 0, "don": 1, "dol": 19}, {"k": -34, "date": "2026-09-30", "rep": 0, "ord": 0, "don": 3, "dol": 77}, {"k": -33, "date": "2026-10-01", "rep": 0, "ord": 0, "don": 39, "dol": 1542}, {"k": -32, "date": "2026-10-02", "rep": 1, "ord": 0, "don": 8, "dol": 235}, {"k": -31, "date": "2026-10-03", "rep": 0, "ord": 0, "don": 14, "dol": 710}, {"k": -30, "date": "2026-10-04", "rep": 0, "ord": 0, "don": 6, "dol": 100}, {"k": -29, "date": "2026-10-05", "rep": 0, "ord": 0, "don": 9, "dol": 119}, {"k": -28, "date": "2026-10-06", "rep": 0, "ord": 0, "don": 17, "dol": 403}, {"k": -27, "date": "2026-10-07", "rep": 17, "ord": 1, "don": 5, "dol": 188}, {"k": -26, "date": "2026-10-08", "rep": 0, "ord": 0, "don": 2, "dol": 101}, {"k": -25, "date": "2026-10-09", "rep": 0, "ord": 0, "don": 24, "dol": 1974}, {"k": -24, "date": "2026-10-10", "rep": 0, "ord": 0, "don": 13, "dol": 234}, {"k": -23, "date": "2026-10-11", "rep": 0, "ord": 0, "don": 11, "dol": 162}, {"k": -22, "date": "2026-10-12", "rep": 0, "ord": 0, "don": 3, "dol": 28}, {"k": -21, "date": "2026-10-13", "rep": 0, "ord": 0, "don": 2, "dol": 33}, {"k": -20, "date": "2026-10-14", "rep": 0, "ord": 0, "don": 6, "dol": 256}, {"k": -19, "date": "2026-10-15", "rep": 0, "ord": 0, "don": 3, "dol": 43}, {"k": -18, "date": "2026-10-16", "rep": 0, "ord": 0, "don": 3, "dol": 77}, {"k": -17, "date": "2026-10-17", "rep": 0, "ord": 0, "don": 23, "dol": 613}]}], "kmin": -45, "kmax": 7, "todayK": -17};
   var SERIES = [
-    {key: "rep", label: "Reports", dash: null},
-    {key: "ord", label: "Orders", dash: "7 5"},
-    {key: "don", label: "Donations", dash: "2 3"}
+    {key: "rep", label: "Reports", dash: null, shape: "circle"},
+    {key: "ord", label: "Orders", dash: "7 5", shape: "square"},
+    {key: "don", label: "Donations", dash: "2 3", shape: "diamond"}
   ];
   var W = 1240, H = 640, L = 78, R = 26, T = 44, B = 56,
       PW = W - L - R, PH = H - T - B,
@@ -112,6 +118,22 @@
     for (var a in attrs) e.setAttribute(a, attrs[a]);
     if (parent) parent.appendChild(e);
     return e;
+  }
+  // data marker whose shape identifies the series (circle=solid reports, square=dashed orders, diamond=dotted donations)
+  function marker(parent, Y, S, cx, cy, r, cls) {
+    var attrs = {"class": (cls || "mk") + " l" + Y.yr};
+    if (S.shape === "circle") {
+      attrs.r = r; attrs.cx = cx; attrs.cy = cy;
+      return el("circle", attrs, parent);
+    }
+    if (S.shape === "square") {
+      var w = r * 1.8;
+      attrs.x = cx - w / 2; attrs.y = cy - w / 2; attrs.width = w; attrs.height = w;
+      return el("rect", attrs, parent);
+    }
+    var d = r * 2.3;
+    attrs.points = cx + "," + (cy - d / 2) + " " + (cx + d / 2) + "," + cy + " " + cx + "," + (cy + d / 2) + " " + (cx - d / 2) + "," + cy;
+    return el("polygon", attrs, parent);
   }
   function x(k) { return L + PW * (k - D.kmin) / (D.kmax - D.kmin); }
   function y(v) {
@@ -160,23 +182,20 @@
       t.textContent = k === 0 ? "E-DAY" : (k < 0 ? "E" + k : "E+" + k);
     });
 
-    // series lines (path breaks at zero values)
+    // series lines — always connect consecutive days (zero-value days sit on the baseline)
     D.years.forEach(function (Y) {
       SERIES.forEach(function (S) {
         if (!state.yr[Y.yr] || !state.ser[S.key]) return;
-        var d = "", pen = false;
-        Y.points.forEach(function (p) {
-          var v = p[S.key];
-          if (v <= 0) { pen = false; return; }
-          d += (pen ? "L" : "M") + x(p.k).toFixed(1) + "," + y(v).toFixed(1);
-          pen = true;
+        var d = "";
+        Y.points.forEach(function (p, i) {
+          d += (i === 0 ? "M" : "L") + x(p.k).toFixed(1) + "," + y(p[S.key]).toFixed(1);
         });
         var attrs = {d: d, "class": "cline l" + Y.yr};
         if (S.dash) attrs["stroke-dasharray"] = S.dash;
         el("path", attrs, svg);
         Y.points.forEach(function (p) {
           var v = p[S.key];
-          if (v > 0) el("circle", {cx: x(p.k).toFixed(1), cy: y(v).toFixed(1), r: 2.5, "class": "cdot l" + Y.yr}, svg);
+          if (v > 0) marker(svg, Y, S, +x(p.k).toFixed(1), +y(v).toFixed(1), 2.8);
         });
       });
     });
@@ -187,7 +206,9 @@
     var dots = [];
     D.years.forEach(function (Y) {
       SERIES.forEach(function (S) {
-        dots.push({Y: Y, S: S, c: el("circle", {r: 5, "class": "hdot l" + Y.yr, style: "display:none"}, cross)});
+        var g = el("g", {style: "display:none"}, cross);
+        marker(g, Y, S, 0, 0, 5.2, "hmk");
+        dots.push({Y: Y, S: S, g: g});
       });
     });
     var cap = el("rect", {x: L, y: T, width: PW, height: PH, fill: "transparent"}, svg);
@@ -202,7 +223,7 @@
       D.years.forEach(function (Y, yi) {
         var p = null;
         for (var i = 0; i < Y.points.length; i++) if (Y.points[i].k === k) { p = Y.points[i]; break; }
-        dots.slice(yi * SERIES.length, yi * SERIES.length + SERIES.length).forEach(function (d2) { d2.c.style.display = "none"; });
+        dots.slice(yi * SERIES.length, yi * SERIES.length + SERIES.length).forEach(function (d2) { d2.g.style.display = "none"; });
         if (!p) {
           rows += '<div class="tr dim"><span class="dot" style="background:' + Y.color + '"></span>' + Y.yr + ' — no data yet</div>';
           return;
@@ -211,9 +232,9 @@
           var dd = dots[yi * SERIES.length + si];
           var v = p[S.key];
           if (v > 0 && state.yr[Y.yr] && state.ser[S.key]) {
-            dd.c.style.display = "";
-            dd.c.setAttribute("cx", x(k)); dd.c.setAttribute("cy", y(v));
-          } else dd.c.style.display = "none";
+            dd.g.style.display = "";
+            dd.g.setAttribute("transform", "translate(" + x(k).toFixed(1) + "," + y(v).toFixed(1) + ")");
+          } else dd.g.style.display = "none";
         });
         var extra = p.dol ? ' <span class="dol">(' + money(p.dol) + ')</span>' : "";
         rows += '<div class="tr"><span class="dot" style="background:' + Y.color + '"></span><b>' + Y.yr + '</b> ' + p.date +
@@ -245,7 +266,13 @@
   SERIES.forEach(function (S) {
     var b = document.createElement("button");
     b.className = "chip";
-    var sw = '<span class="swatch line' + (S.dash ? ' dashed' : '') + '"></span>';
+    // chip swatch = the actual line style + marker shape used on the chart
+    var mk;
+    if (S.shape === "circle") mk = '<circle cx="13" cy="6" r="3.4"/>';
+    else if (S.shape === "square") mk = '<rect x="10" y="3" width="6" height="6"/>';
+    else mk = '<polygon points="13,1.4 17.6,6 13,10.6 8.4,6"/>';
+    var sw = '<svg class="linesw" width="26" height="12"><line x1="0" y1="6" x2="26" y2="6" stroke="#666" stroke-width="2"' +
+             (S.dash ? ' stroke-dasharray="' + S.dash + '"' : '') + '/>' + mk + '</svg>';
     b.innerHTML = sw + S.label;
     b.onclick = function () { state.ser[S.key] = !state.ser[S.key]; b.classList.toggle("off"); render(); };
     ctl.appendChild(b);
