@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Pizza to the Polls — Midterm Volume</title>
+<style>
+ body { font-family: -apple-system, Helvetica, Arial, sans-serif; margin: 24px; background:#faf8f4; color:#222; }
+ h1 { font-size: 22px; margin-bottom: 2px; }
+ h2 { font-size: 16px; margin: 8px 0 6px; }
+ .sub { color:#666; font-size: 13px; margin-bottom: 16px; }
+ .chart { width: 100%; max-width: 1000px; display:block; margin: 6px 0 18px; background:#fff; border:1px solid #e5e0d8; border-radius:8px; }
+ .grid { stroke:#eee; stroke-width:1; } .axis { stroke:#999; } .tick { stroke:#999; }
+ .ylab,.xlab { font-size:11px; fill:#666; } .xlab { fill:#444; } .ylab2 { font-size:11px; fill:#888; font-style:italic; }
+ .ptitle { font-size:13px; font-weight:600; fill:#333; }
+ .ann { font-size:12px; font-weight:700; fill:#b3261e; }
+ .bar.rep { fill:#e4572e; } .bar.ord { fill:#2e8b57; } .bar.don { fill:#f0a500; }
+ .bar.rep:hover { fill:#c74423; } .bar.ord:hover { fill:#247046; } .bar.don:hover { fill:#c98600; }
+ .eday { stroke:#b3261e; stroke-width:1.5; stroke-dasharray:4 3; }
+ .today { stroke:#1f6fb2; stroke-width:2.5; }
+ .tlab { font-size:11.5px; font-weight:700; fill:#1f6fb2; }
+ .pre { fill:#fdeee5; } .future { fill:#e9edf2; }
+ .flab { font-size:11.5px; font-weight:700; fill:#8a97a6; }
+ .legend { font-size:13px; margin-bottom:14px; }
+ .sw { display:inline-block; width:12px; height:12px; border-radius:3px; margin:0 5px 0 14px; vertical-align:-1px; }
+ .callout { background:#eef4fa; border:1px solid #c5d8ec; border-left:4px solid #1f6fb2; border-radius:6px; padding:10px 16px; font-size:13.5px; margin-bottom:18px; max-width:1000px; }
+ table { border-collapse: collapse; font-size:13px; margin-top:6px; background:#fff; border:1px solid #e5e0d8; border-radius:8px; }
+ th, td { padding:7px 14px; text-align:right; border-top:1px solid #eee; }
+ th:first-child, td:first-child { text-align:left; }
+ thead th { background:#f4f1ec; font-size:12px; text-transform:uppercase; letter-spacing:.04em; color:#555; border-top:none; }
+ tbody th { font-weight:600; }
+ .mut { color:#888; font-size:11px; }
+ #compwrap { position:relative; max-width:1240px; background:#fff; border:1px solid #e5e0d8; border-radius:8px; margin: 6px 0 18px; }
+ .ichart { width:100%; display:block; }
+ .cline { fill:none; stroke-width:2.25; }
+ .l2018 { stroke:#e4572e; } .l2022 { stroke:#1f6fb2; } .l2026 { stroke:#7b3fa0; }
+ .cdot { stroke:#fff; stroke-width:1; }
+ .cdot.l2018 { fill:#e4572e; } .cdot.l2022 { fill:#1f6fb2; } .cdot.l2026 { fill:#7b3fa0; }
+ .cross { stroke:#555; stroke-width:1; stroke-dasharray:3 3; }
+ .hdot { stroke:#fff; stroke-width:1.5; fill-opacity:0.9; }
+ .hdot.l2018 { fill:#e4572e; } .hdot.l2022 { fill:#1f6fb2; } .hdot.l2026 { fill:#7b3fa0; }
+ #tip { position:absolute; display:none; pointer-events:none; background:#fffefb; border:1px solid #d8d2c8; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,.12); padding:8px 10px; font-size:12px; z-index:5; max-width:340px; }
+ #tip .th { font-weight:700; margin-bottom:5px; color:#444; }
+ #tip .tr { white-space:nowrap; padding:1.5px 0; }
+ #tip .tr.dim { color:#aaa; }
+ #tip .dot { display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:6px; }
+ #tip .dol { color:#b8860b; }
+ #compctl { margin-bottom:8px; }
+ .chip { font:inherit; font-size:12.5px; background:#fff; border:1px solid #d8d2c8; border-radius:16px; padding:4px 12px; margin-right:8px; cursor:pointer; }
+ .chip:hover { border-color:#1f6fb2; }
+ .chip.off { opacity:.4; }
+ .chip.scale { font-weight:600; text-transform:capitalize; }
+ .chip.scale.active { background:#1f6fb2; color:#fff; border-color:#1f6fb2; }
+ .swatch { display:inline-block; width:12px; height:12px; border-radius:3px; margin-right:6px; vertical-align:-1px; }
+ .swatch.line { background:transparent; height:0; border:none; border-top:3px solid #666; border-radius:0; width:16px; }
+ .swatch.line.dashed { border-top-style:dashed; }
+</style></head><body>
+<h1>Pizza to the Polls — Midterm Report, Order &amp; Donation Volume</h1>
+<div class="sub">Daily counts from production <code>pizzabase</code> (reports, orders, donations tables), bucketed by US/Eastern day. X-axes aligned on Election Day (E). Blue line = today, Sat Oct 17, 2026 — E-17 before the 2026 midterms (Tue Nov 3). Completed cycles shown E−45 → E+7; 2026 shown through today with the remaining run-up shaded.</div>
+<div class="callout"><b>Where we are today (E−17, Oct 17 2026):</b> historically this point in the cycle is near-silent — on the equivalent day, 2018 had <b>0 reports / 2 donations</b> and 2022 had <b>0 reports / 6 donations</b>. 2026 reports are similarly quiet (26 since Sept 1), but <b>2026 donations are already running ~10× the past-midterm baseline</b> (last 7 days: 51 donations, $1,212; last 14 days: 127, $4,331) — closer to how past cycles looked in the final week.</div>
+<h2>All three cycles aligned — reports, orders &amp; donations</h2>
+<div class="sub">Hover for exact daily values across all years · click the chips to toggle years/series · switch log ↔ linear scale.</div>
+<div id="compctl"></div>
+<div id="compwrap"><div id="comp"></div><div id="tip"></div></div>
+<h2>Daily detail, cycle by cycle</h2>
+<div class="legend">
+ <span class="sw" style="background:#e4572e"></span>Reports
+ <span class="sw" style="background:#2e8b57"></span>Orders
+ <span class="sw" style="background:#f0a500"></span>Donations
+ <span class="sw" style="background:#b3261e;height:3px;border-radius:1px;"></span>Election Day
+ <span class="sw" style="background:#1f6fb2;width:3px;"></span>Today
+</div>
+<svg viewBox="0 0 980 380" class="chart"><line x1="64" y1="273.2" x2="960" y2="273.2" class="grid"/><text x="56" y="277.2" class="ylab" text-anchor="end">2,000</text><line x1="64" y1="212.4" x2="960" y2="212.4" class="grid"/><text x="56" y="216.4" class="ylab" text-anchor="end">4,000</text><line x1="64" y1="151.6" x2="960" y2="151.6" class="grid"/><text x="56" y="155.6" class="ylab" text-anchor="end">6,000</text><line x1="64" y1="90.8" x2="960" y2="90.8" class="grid"/><text x="56" y="94.8" class="ylab" text-anchor="end">8,000</text><line x1="64" y1="30.0" x2="960" y2="30.0" class="grid"/><text x="56" y="34.0" class="ylab" text-anchor="end">10,000</text><rect x="64" y="30" width="769.2" height="304" class="pre"/><line x1="833.2" y1="30" x2="833.2" y2="334" class="eday"/><line x1="545.8" y1="30" x2="545.8" y2="334" class="today"/><text x="540.8" y="44" class="tlab" text-anchor="end">TODAY · Oct 17, 2026 (E−17)</text><rect x="65.7" y="334.0" width="4.1" height="0.0" class="bar rep"><title>E-45: 1 reports</title></rect><rect x="71.3" y="334.0" width="4.1" height="0.0" class="bar ord"><title>E-45: 1 orders</title></rect><rect x="482.6" y="334.0" width="4.1" height="0.0" class="bar don"><title>E-21: 1 donations ($19)</title></rect><rect x="488.3" y="334.0" width="4.1" height="0.0" class="bar rep"><title>E-20: 1 reports</title></rect><rect x="493.9" y="334.0" width="4.1" height="0.0" class="bar ord"><title>E-20: 1 orders</title></rect><rect x="499.5" y="333.8" width="4.1" height="0.2" class="bar don"><title>E-20: 8 donations ($192)</title></rect><rect x="505.2" y="334.0" width="4.1" height="0.0" class="bar rep"><title>E-19: 1 reports</title></rect><rect x="510.8" y="334.0" width="4.1" height="0.0" class="bar ord"><title>E-19: 1 orders</title></rect><rect x="516.4" y="333.6" width="4.1" height="0.4" class="bar don"><title>E-19: 13 donations ($297)</title></rect><rect x="522.1" y="333.9" width="4.1" height="0.1" class="bar rep"><title>E-18: 4 reports</title></rect><rect x="527.7" y="333.9" width="4.1" height="0.1" class="bar ord"><title>E-18: 4 orders</title></rect><rect x="533.3" y="332.9" width="4.1" height="1.1" class="bar don"><title>E-18: 37 donations ($2,985)</title></rect><rect x="550.2" y="333.9" width="4.1" height="0.1" class="bar don"><title>E-17: 2 donations ($116)</title></rect><rect x="567.1" y="333.9" width="4.1" height="0.1" class="bar don"><title>E-16: 3 donations ($145)</title></rect><rect x="572.9" y="334.0" width="4.1" height="0.0" class="bar rep"><title>E-15: 1 reports</title></rect><rect x="578.4" y="334.0" width="4.1" height="0.0" class="bar ord"><title>E-15: 1 orders</title></rect><rect x="584.0" y="333.7" width="4.1" height="0.3" class="bar don"><title>E-15: 11 donations ($205)</title></rect><rect x="589.8" y="333.9" width="4.1" height="0.1" class="bar rep"><title>E-14: 3 reports</title></rect><rect x="595.3" y="333.9" width="4.1" height="0.1" class="bar ord"><title>E-14: 2 orders</title></rect><rect x="600.9" y="333.8" width="4.1" height="0.2" class="bar don"><title>E-14: 5 donations ($96)</title></rect><rect x="606.7" y="333.9" width="4.1" height="0.1" class="bar rep"><title>E-13: 3 reports</title></rect><rect x="612.3" y="334.0" width="4.1" height="0.0" class="bar ord"><title>E-13: 1 orders</title></rect><rect x="617.8" y="333.6" width="4.1" height="0.4" class="bar don"><title>E-13: 14 donations ($633)</title></rect><rect x="623.6" y="333.8" width="4.1" height="0.2" class="bar rep"><title>E-12: 7 reports</title></rect><rect x="629.2" y="333.8" width="4.1" height="0.2" class="bar ord"><title>E-12: 6 orders</title></rect><rect x="634.7" y="331.9" width="4.1" height="2.1" class="bar don"><title>E-12: 69 donations ($1,879)</title></rect><rect x="640.5" y="333.9" width="4.1" height="0.1" class="bar rep"><title>E-11: 2 reports</title></rect><rect x="651.6" y="333.3" width="4.1" height="0.7" class="bar don"><title>E-11: 24 donations ($702)</title></rect><rect x="668.5" y="333.9" width="4.1" height="0.1" class="bar don"><title>E-10: 3 donations ($48)</title></rect><rect x="685.5" y="333.8" width="4.1" height="0.2" class="bar don"><title>E-9: 8 donations ($522)</title></rect><rect x="702.4" y="333.8" width="4.1" height="0.2" class="bar don"><title>E-8: 7 donations ($114)</title></rect><rect x="708.1" y="333.9" width="4.1" height="0.1" class="bar rep"><title>E-7: 3 reports</title></rect><rect x="713.7" y="333.9" width="4.1" height="0.1" class="bar ord"><title>E-7: 2 orders</title></rect><rect x="719.3" y="333.7" width="4.1" height="0.3" class="bar don"><title>E-7: 9 donations ($323)</title></rect><rect x="725.0" y="333.9" width="4.1" height="0.1" class="bar rep"><title>E-6: 2 reports</title></rect><rect x="736.2" y="333.8" width="4.1" height="0.2" class="bar don"><title>E-6: 5 donations ($261)</title></rect><rect x="741.9" y="334.0" width="4.1" height="0.0" class="bar rep"><title>E-5: 1 reports</title></rect><rect x="753.1" y="333.7" width="4.1" height="0.3" class="bar don"><title>E-5: 10 donations ($298)</title></rect><rect x="758.8" y="333.7" width="4.1" height="0.3" class="bar rep"><title>E-4: 10 reports</title></rect><rect x="764.4" y="333.9" width="4.1" height="0.1" class="bar ord"><title>E-4: 2 orders</title></rect><rect x="770.0" y="332.5" width="4.1" height="1.5" class="bar don"><title>E-4: 48 donations ($1,806)</title></rect><rect x="775.7" y="332.8" width="4.1" height="1.2" class="bar rep"><title>E-3: 39 reports</title></rect><rect x="781.3" y="333.6" width="4.1" height="0.4" class="bar ord"><title>E-3: 14 orders</title></rect><rect x="786.9" y="323.1" width="4.1" height="10.9" class="bar don"><title>E-3: 357 donations ($11,203)</title></rect><rect x="792.6" y="332.3" width="4.1" height="1.7" class="bar rep"><title>E-2: 55 reports</title></rect><rect x="798.2" y="333.1" width="4.1" height="0.9" class="bar ord"><title>E-2: 29 orders</title></rect><rect x="803.8" y="328.9" width="4.1" height="5.1" class="bar don"><title>E-2: 168 donations ($5,372)</title></rect><rect x="809.5" y="330.6" width="4.1" height="3.4" class="bar rep"><title>E-1: 113 reports</title></rect><rect x="815.1" y="332.3" width="4.1" height="1.7" class="bar ord"><title>E-1: 57 orders</title></rect><rect x="820.7" y="313.4" width="4.1" height="20.6" class="bar don"><title>E-1: 677 donations ($27,492)</title></rect><rect x="826.4" y="270.6" width="4.1" height="63.4" class="bar rep"><title>E0: 2,087 reports</title></rect><rect x="832.0" y="312.8" width="4.1" height="21.2" class="bar ord"><title>E0: 697 orders</title></rect><rect x="837.6" y="53.5" width="4.1" height="280.5" class="bar don"><title>E0: 9,227 donations ($312,791)</title></rect><rect x="843.4" y="333.8" width="4.1" height="0.2" class="bar rep"><title>E1: 5 reports</title></rect><rect x="848.9" y="333.9" width="4.1" height="0.1" class="bar ord"><title>E1: 3 orders</title></rect><rect x="854.5" y="333.7" width="4.1" height="0.3" class="bar don"><title>E1: 11 donations ($424)</title></rect><rect x="860.3" y="333.9" width="4.1" height="0.1" class="bar rep"><title>E2: 4 reports</title></rect><rect x="865.8" y="333.9" width="4.1" height="0.1" class="bar ord"><title>E2: 2 orders</title></rect><rect x="871.4" y="333.9" width="4.1" height="0.1" class="bar don"><title>E2: 3 donations ($14)</title></rect><rect x="877.2" y="334.0" width="4.1" height="0.0" class="bar rep"><title>E3: 1 reports</title></rect><rect x="882.7" y="334.0" width="4.1" height="0.0" class="bar ord"><title>E3: 1 orders</title></rect><rect x="888.3" y="334.0" width="4.1" height="0.0" class="bar don"><title>E3: 1 donations ($19)</title></rect><line x1="64" y1="334" x2="960" y2="334" class="axis"/><line x1="72.5" y1="334" x2="72.5" y2="339" class="tick"/><text x="72.5" y="352" class="xlab" text-anchor="middle">E-45</text><line x1="326.0" y1="334" x2="326.0" y2="339" class="tick"/><text x="326.0" y="352" class="xlab" text-anchor="middle">E-30</text><line x1="478.2" y1="334" x2="478.2" y2="339" class="tick"/><text x="478.2" y="352" class="xlab" text-anchor="middle">E-21</text><line x1="596.5" y1="334" x2="596.5" y2="339" class="tick"/><text x="596.5" y="352" class="xlab" text-anchor="middle">E-14</text><line x1="714.9" y1="334" x2="714.9" y2="339" class="tick"/><text x="714.9" y="352" class="xlab" text-anchor="middle">E-7</text><line x1="782.5" y1="334" x2="782.5" y2="339" class="tick"/><text x="782.5" y="352" class="xlab" text-anchor="middle">E-3</text><line x1="833.2" y1="334" x2="833.2" y2="339" class="tick"/><text x="833.2" y="352" class="xlab" text-anchor="middle">E-DAY</text><line x1="883.9" y1="334" x2="883.9" y2="339" class="tick"/><text x="883.9" y="352" class="xlab" text-anchor="middle">E+3</text><line x1="951.5" y1="334" x2="951.5" y2="339" class="tick"/><text x="951.5" y="352" class="xlab" text-anchor="middle">E+7</text><text x="827.2" y="43.5" class="ann" text-anchor="end">E-DAY: 2,087 rep · 697 ord · 9,227 don ($312,791)</text><text x="74" y="32" class="ptitle">2018 midterm — Election Day Tue Nov 6, 2018</text></svg>
+<svg viewBox="0 0 980 380" class="chart"><line x1="64" y1="273.2" x2="960" y2="273.2" class="grid"/><text x="56" y="277.2" class="ylab" text-anchor="end">400</text><line x1="64" y1="212.4" x2="960" y2="212.4" class="grid"/><text x="56" y="216.4" class="ylab" text-anchor="end">800</text><line x1="64" y1="151.6" x2="960" y2="151.6" class="grid"/><text x="56" y="155.6" class="ylab" text-anchor="end">1,200</text><line x1="64" y1="90.8" x2="960" y2="90.8" class="grid"/><text x="56" y="94.8" class="ylab" text-anchor="end">1,600</text><line x1="64" y1="30.0" x2="960" y2="30.0" class="grid"/><text x="56" y="34.0" class="ylab" text-anchor="end">2,000</text><rect x="64" y="30" width="769.2" height="304" class="pre"/><line x1="833.2" y1="30" x2="833.2" y2="334" class="eday"/><line x1="545.8" y1="30" x2="545.8" y2="334" class="today"/><text x="540.8" y="44" class="tlab" text-anchor="end">TODAY · Oct 17, 2026 (E−17)</text><rect x="76.8" y="333.8" width="4.1" height="0.2" class="bar don"><title>E-45: 1 donations ($9)</title></rect><rect x="105.1" y="333.8" width="4.1" height="0.2" class="bar ord"><title>E-43: 1 orders</title></rect><rect x="122.0" y="333.8" width="4.1" height="0.2" class="bar ord"><title>E-42: 1 orders</title></rect><rect x="138.9" y="333.7" width="4.1" height="0.3" class="bar ord"><title>E-41: 2 orders</title></rect><rect x="144.5" y="333.5" width="4.1" height="0.5" class="bar don"><title>E-41: 3 donations ($72)</title></rect><rect x="155.8" y="333.8" width="4.1" height="0.2" class="bar ord"><title>E-40: 1 orders</title></rect><rect x="161.4" y="333.7" width="4.1" height="0.3" class="bar don"><title>E-40: 2 donations ($29)</title></rect><rect x="178.3" y="333.5" width="4.1" height="0.5" class="bar don"><title>E-39: 3 donations ($23)</title></rect><rect x="195.2" y="333.7" width="4.1" height="0.3" class="bar don"><title>E-38: 2 donations ($9)</title></rect><rect x="223.4" y="333.8" width="4.1" height="0.2" class="bar ord"><title>E-36: 1 orders</title></rect><rect x="229.0" y="333.8" width="4.1" height="0.2" class="bar don"><title>E-36: 1 donations ($315)</title></rect><rect x="245.9" y="333.8" width="4.1" height="0.2" class="bar don"><title>E-35: 1 donations ($19)</title></rect><rect x="279.7" y="333.8" width="4.1" height="0.2" class="bar don"><title>E-33: 1 donations ($48)</title></rect><rect x="291.0" y="333.8" width="4.1" height="0.2" class="bar ord"><title>E-32: 1 orders</title></rect><rect x="296.6" y="333.8" width="4.1" height="0.2" class="bar don"><title>E-32: 1 donations ($19)</title></rect><rect x="313.5" y="333.8" width="4.1" height="0.2" class="bar don"><title>E-31: 1 donations ($9)</title></rect><rect x="330.4" y="333.7" width="4.1" height="0.3" class="bar don"><title>E-30: 2 donations ($101)</title></rect><rect x="353.1" y="333.8" width="4.1" height="0.2" class="bar rep"><title>E-28: 1 reports</title></rect><rect x="358.7" y="333.8" width="4.1" height="0.2" class="bar ord"><title>E-28: 1 orders</title></rect><rect x="364.2" y="333.8" width="4.1" height="0.2" class="bar don"><title>E-28: 1 donations ($19)</title></rect><rect x="381.2" y="333.7" width="4.1" height="0.3" class="bar don"><title>E-27: 2 donations ($14)</title></rect><rect x="398.1" y="333.8" width="4.1" height="0.2" class="bar don"><title>E-26: 1 donations ($5)</title></rect><rect x="415.0" y="333.2" width="4.1" height="0.8" class="bar don"><title>E-25: 5 donations ($81)</title></rect><rect x="431.9" y="333.7" width="4.1" height="0.3" class="bar don"><title>E-24: 2 donations ($96)</title></rect><rect x="448.8" y="333.8" width="4.1" height="0.2" class="bar don"><title>E-23: 1 donations ($9)</title></rect><rect x="465.7" y="333.7" width="4.1" height="0.3" class="bar don"><title>E-22: 2 donations ($58)</title></rect><rect x="482.6" y="333.8" width="4.1" height="0.2" class="bar don"><title>E-21: 1 donations ($19)</title></rect><rect x="493.9" y="333.7" width="4.1" height="0.3" class="bar ord"><title>E-20: 2 orders</title></rect><rect x="499.5" y="321.2" width="4.1" height="12.8" class="bar don"><title>E-20: 84 donations ($3,391)</title></rect><rect x="516.4" y="331.3" width="4.1" height="2.7" class="bar don"><title>E-19: 18 donations ($621)</title></rect><rect x="522.1" y="333.8" width="4.1" height="0.2" class="bar rep"><title>E-18: 1 reports</title></rect><rect x="527.7" y="333.7" width="4.1" height="0.3" class="bar ord"><title>E-18: 2 orders</title></rect><rect x="533.3" y="332.5" width="4.1" height="1.5" class="bar don"><title>E-18: 10 donations ($152)</title></rect><rect x="550.2" y="333.1" width="4.1" height="0.9" class="bar don"><title>E-17: 6 donations ($275)</title></rect><rect x="567.1" y="333.4" width="4.1" height="0.6" class="bar don"><title>E-16: 4 donations ($110)</title></rect><rect x="572.9" y="333.7" width="4.1" height="0.3" class="bar rep"><title>E-15: 2 reports</title></rect><rect x="578.4" y="333.7" width="4.1" height="0.3" class="bar ord"><title>E-15: 2 orders</title></rect><rect x="584.0" y="333.1" width="4.1" height="0.9" class="bar don"><title>E-15: 6 donations ($95)</title></rect><rect x="589.8" y="333.8" width="4.1" height="0.2" class="bar rep"><title>E-14: 1 reports</title></rect><rect x="595.3" y="333.7" width="4.1" height="0.3" class="bar ord"><title>E-14: 2 orders</title></rect><rect x="600.9" y="332.5" width="4.1" height="1.5" class="bar don"><title>E-14: 10 donations ($291)</title></rect><rect x="612.3" y="332.6" width="4.1" height="1.4" class="bar ord"><title>E-13: 9 orders</title></rect><rect x="617.8" y="319.3" width="4.1" height="14.7" class="bar don"><title>E-13: 97 donations ($5,137)</title></rect><rect x="629.2" y="333.5" width="4.1" height="0.5" class="bar ord"><title>E-12: 3 orders</title></rect><rect x="634.7" y="331.0" width="4.1" height="3.0" class="bar don"><title>E-12: 20 donations ($5,554)</title></rect><rect x="640.5" y="333.7" width="4.1" height="0.3" class="bar rep"><title>E-11: 2 reports</title></rect><rect x="646.1" y="330.2" width="4.1" height="3.8" class="bar ord"><title>E-11: 25 orders</title></rect><rect x="651.6" y="325.3" width="4.1" height="8.7" class="bar don"><title>E-11: 57 donations ($2,268)</title></rect><rect x="657.4" y="333.1" width="4.1" height="0.9" class="bar rep"><title>E-10: 6 reports</title></rect><rect x="663.0" y="333.4" width="4.1" height="0.6" class="bar ord"><title>E-10: 4 orders</title></rect><rect x="668.5" y="332.2" width="4.1" height="1.8" class="bar don"><title>E-10: 12 donations ($555)</title></rect><rect x="674.3" y="333.8" width="4.1" height="0.2" class="bar rep"><title>E-9: 1 reports</title></rect><rect x="679.9" y="333.8" width="4.1" height="0.2" class="bar ord"><title>E-9: 1 orders</title></rect><rect x="685.5" y="332.5" width="4.1" height="1.5" class="bar don"><title>E-9: 10 donations ($570)</title></rect><rect x="691.2" y="333.8" width="4.1" height="0.2" class="bar rep"><title>E-8: 1 reports</title></rect><rect x="696.8" y="333.4" width="4.1" height="0.6" class="bar ord"><title>E-8: 4 orders</title></rect><rect x="702.4" y="332.6" width="4.1" height="1.4" class="bar don"><title>E-8: 9 donations ($386)</title></rect><rect x="708.1" y="333.1" width="4.1" height="0.9" class="bar rep"><title>E-7: 6 reports</title></rect><rect x="713.7" y="333.5" width="4.1" height="0.5" class="bar ord"><title>E-7: 3 orders</title></rect><rect x="719.3" y="332.3" width="4.1" height="1.7" class="bar don"><title>E-7: 11 donations ($604)</title></rect><rect x="730.6" y="333.8" width="4.1" height="0.2" class="bar ord"><title>E-6: 1 orders</title></rect><rect x="736.2" y="333.4" width="4.1" height="0.6" class="bar don"><title>E-6: 4 donations ($212)</title></rect><rect x="741.9" y="332.8" width="4.1" height="1.2" class="bar rep"><title>E-5: 8 reports</title></rect><rect x="747.5" y="332.9" width="4.1" height="1.1" class="bar ord"><title>E-5: 7 orders</title></rect><rect x="753.1" y="323.5" width="4.1" height="10.5" class="bar don"><title>E-5: 69 donations ($3,496)</title></rect><rect x="758.8" y="327.9" width="4.1" height="6.1" class="bar rep"><title>E-4: 40 reports</title></rect><rect x="764.4" y="328.5" width="4.1" height="5.5" class="bar ord"><title>E-4: 36 orders</title></rect><rect x="770.0" y="326.4" width="4.1" height="7.6" class="bar don"><title>E-4: 50 donations ($3,454)</title></rect><rect x="775.7" y="332.2" width="4.1" height="1.8" class="bar rep"><title>E-3: 12 reports</title></rect><rect x="781.3" y="332.8" width="4.1" height="1.2" class="bar ord"><title>E-3: 8 orders</title></rect><rect x="786.9" y="329.6" width="4.1" height="4.4" class="bar don"><title>E-3: 29 donations ($1,273)</title></rect><rect x="792.6" y="331.0" width="4.1" height="3.0" class="bar rep"><title>E-2: 20 reports</title></rect><rect x="798.2" y="332.8" width="4.1" height="1.2" class="bar ord"><title>E-2: 8 orders</title></rect><rect x="803.8" y="328.2" width="4.1" height="5.8" class="bar don"><title>E-2: 38 donations ($2,712)</title></rect><rect x="809.5" y="330.8" width="4.1" height="3.2" class="bar rep"><title>E-1: 21 reports</title></rect><rect x="815.1" y="331.0" width="4.1" height="3.0" class="bar ord"><title>E-1: 20 orders</title></rect><rect x="820.7" y="284.9" width="4.1" height="49.1" class="bar don"><title>E-1: 323 donations ($20,105)</title></rect><rect x="826.4" y="283.5" width="4.1" height="50.5" class="bar rep"><title>E0: 332 reports</title></rect><rect x="832.0" y="305.3" width="4.1" height="28.7" class="bar ord"><title>E0: 189 orders</title></rect><rect x="837.6" y="106.6" width="4.1" height="227.4" class="bar don"><title>E0: 1,496 donations ($82,505)</title></rect><rect x="854.5" y="332.5" width="4.1" height="1.5" class="bar don"><title>E1: 10 donations ($444)</title></rect><rect x="871.4" y="333.8" width="4.1" height="0.2" class="bar don"><title>E2: 1 donations ($5)</title></rect><rect x="888.3" y="333.8" width="4.1" height="0.2" class="bar don"><title>E3: 1 donations ($19)</title></rect><rect x="905.2" y="333.2" width="4.1" height="0.8" class="bar don"><title>E4: 5 donations ($130)</title></rect><rect x="922.1" y="333.8" width="4.1" height="0.2" class="bar don"><title>E5: 1 donations ($5)</title></rect><rect x="939.0" y="333.4" width="4.1" height="0.6" class="bar don"><title>E6: 4 donations ($62)</title></rect><line x1="64" y1="334" x2="960" y2="334" class="axis"/><line x1="72.5" y1="334" x2="72.5" y2="339" class="tick"/><text x="72.5" y="352" class="xlab" text-anchor="middle">E-45</text><line x1="326.0" y1="334" x2="326.0" y2="339" class="tick"/><text x="326.0" y="352" class="xlab" text-anchor="middle">E-30</text><line x1="478.2" y1="334" x2="478.2" y2="339" class="tick"/><text x="478.2" y="352" class="xlab" text-anchor="middle">E-21</text><line x1="596.5" y1="334" x2="596.5" y2="339" class="tick"/><text x="596.5" y="352" class="xlab" text-anchor="middle">E-14</text><line x1="714.9" y1="334" x2="714.9" y2="339" class="tick"/><text x="714.9" y="352" class="xlab" text-anchor="middle">E-7</text><line x1="782.5" y1="334" x2="782.5" y2="339" class="tick"/><text x="782.5" y="352" class="xlab" text-anchor="middle">E-3</text><line x1="833.2" y1="334" x2="833.2" y2="339" class="tick"/><text x="833.2" y="352" class="xlab" text-anchor="middle">E-DAY</text><line x1="883.9" y1="334" x2="883.9" y2="339" class="tick"/><text x="883.9" y="352" class="xlab" text-anchor="middle">E+3</text><line x1="951.5" y1="334" x2="951.5" y2="339" class="tick"/><text x="951.5" y="352" class="xlab" text-anchor="middle">E+7</text><text x="827.2" y="96.6" class="ann" text-anchor="end">E-DAY: 332 rep · 189 ord · 1,496 don ($82,505)</text><text x="74" y="32" class="ptitle">2022 midterm — Election Day Tue Nov 8, 2022</text></svg>
+<svg viewBox="0 0 980 380" class="chart"><line x1="64" y1="273.2" x2="960" y2="273.2" class="grid"/><text x="56" y="277.2" class="ylab" text-anchor="end">10</text><line x1="64" y1="212.4" x2="960" y2="212.4" class="grid"/><text x="56" y="216.4" class="ylab" text-anchor="end">20</text><line x1="64" y1="151.6" x2="960" y2="151.6" class="grid"/><text x="56" y="155.6" class="ylab" text-anchor="end">30</text><line x1="64" y1="90.8" x2="960" y2="90.8" class="grid"/><text x="56" y="94.8" class="ylab" text-anchor="end">40</text><line x1="64" y1="30.0" x2="960" y2="30.0" class="grid"/><text x="56" y="34.0" class="ylab" text-anchor="end">50</text><rect x="64" y="30" width="769.2" height="304" class="pre"/><line x1="833.2" y1="30" x2="833.2" y2="334" class="eday"/><line x1="545.8" y1="30" x2="545.8" y2="334" class="today"/><text x="540.8" y="44" class="tlab" text-anchor="end">TODAY · Oct 17, 2026 (E−17)</text><rect x="545.8" y="30" width="414.2" height="304" class="future"/><text x="752.9" y="322" class="flab" text-anchor="middle">the surge happens here →</text><rect x="76.8" y="309.7" width="4.1" height="24.3" class="bar don"><title>E-45: 4 donations ($125)</title></rect><rect x="93.8" y="327.9" width="4.1" height="6.1" class="bar don"><title>E-44: 1 donations ($19)</title></rect><rect x="110.7" y="309.7" width="4.1" height="24.3" class="bar don"><title>E-43: 4 donations ($107)</title></rect><rect x="127.6" y="315.8" width="4.1" height="18.2" class="bar don"><title>E-42: 3 donations ($48)</title></rect><rect x="150.2" y="315.8" width="4.1" height="18.2" class="bar rep"><title>E-40: 3 reports</title></rect><rect x="161.4" y="242.8" width="4.1" height="91.2" class="bar don"><title>E-40: 15 donations ($350)</title></rect><rect x="178.3" y="321.8" width="4.1" height="12.2" class="bar don"><title>E-39: 2 donations ($101)</title></rect><rect x="184.0" y="327.9" width="4.1" height="6.1" class="bar rep"><title>E-38: 1 reports</title></rect><rect x="195.2" y="182.0" width="4.1" height="152.0" class="bar don"><title>E-38: 25 donations ($685)</title></rect><rect x="212.1" y="321.8" width="4.1" height="12.2" class="bar don"><title>E-37: 2 donations ($29)</title></rect><rect x="217.8" y="309.7" width="4.1" height="24.3" class="bar rep"><title>E-36: 4 reports</title></rect><rect x="229.0" y="315.8" width="4.1" height="18.2" class="bar don"><title>E-36: 3 donations ($120)</title></rect><rect x="245.9" y="327.9" width="4.1" height="6.1" class="bar don"><title>E-35: 1 donations ($19)</title></rect><rect x="262.8" y="315.8" width="4.1" height="18.2" class="bar don"><title>E-34: 3 donations ($77)</title></rect><rect x="279.7" y="96.9" width="4.1" height="237.1" class="bar don"><title>E-33: 39 donations ($1,542)</title></rect><rect x="285.5" y="327.9" width="4.1" height="6.1" class="bar rep"><title>E-32: 1 reports</title></rect><rect x="296.6" y="285.4" width="4.1" height="48.6" class="bar don"><title>E-32: 8 donations ($235)</title></rect><rect x="313.5" y="248.9" width="4.1" height="85.1" class="bar don"><title>E-31: 14 donations ($710)</title></rect><rect x="330.4" y="297.5" width="4.1" height="36.5" class="bar don"><title>E-30: 6 donations ($100)</title></rect><rect x="347.3" y="279.3" width="4.1" height="54.7" class="bar don"><title>E-29: 9 donations ($119)</title></rect><rect x="364.2" y="230.6" width="4.1" height="103.4" class="bar don"><title>E-28: 17 donations ($403)</title></rect><rect x="370.0" y="230.6" width="4.1" height="103.4" class="bar rep"><title>E-27: 17 reports</title></rect><rect x="375.6" y="327.9" width="4.1" height="6.1" class="bar ord"><title>E-27: 1 orders</title></rect><rect x="381.2" y="303.6" width="4.1" height="30.4" class="bar don"><title>E-27: 5 donations ($188)</title></rect><rect x="398.1" y="321.8" width="4.1" height="12.2" class="bar don"><title>E-26: 2 donations ($101)</title></rect><rect x="415.0" y="188.1" width="4.1" height="145.9" class="bar don"><title>E-25: 24 donations ($1,974)</title></rect><rect x="431.9" y="255.0" width="4.1" height="79.0" class="bar don"><title>E-24: 13 donations ($234)</title></rect><rect x="448.8" y="267.1" width="4.1" height="66.9" class="bar don"><title>E-23: 11 donations ($162)</title></rect><rect x="465.7" y="315.8" width="4.1" height="18.2" class="bar don"><title>E-22: 3 donations ($28)</title></rect><rect x="482.6" y="321.8" width="4.1" height="12.2" class="bar don"><title>E-21: 2 donations ($33)</title></rect><rect x="499.5" y="297.5" width="4.1" height="36.5" class="bar don"><title>E-20: 6 donations ($256)</title></rect><rect x="516.4" y="315.8" width="4.1" height="18.2" class="bar don"><title>E-19: 3 donations ($43)</title></rect><rect x="533.3" y="315.8" width="4.1" height="18.2" class="bar don"><title>E-18: 3 donations ($77)</title></rect><rect x="550.2" y="194.2" width="4.1" height="139.8" class="bar don"><title>E-17: 23 donations ($613)</title></rect><line x1="64" y1="334" x2="960" y2="334" class="axis"/><line x1="72.5" y1="334" x2="72.5" y2="339" class="tick"/><text x="72.5" y="352" class="xlab" text-anchor="middle">E-45</text><line x1="326.0" y1="334" x2="326.0" y2="339" class="tick"/><text x="326.0" y="352" class="xlab" text-anchor="middle">E-30</text><line x1="478.2" y1="334" x2="478.2" y2="339" class="tick"/><text x="478.2" y="352" class="xlab" text-anchor="middle">E-21</text><line x1="596.5" y1="334" x2="596.5" y2="339" class="tick"/><text x="596.5" y="352" class="xlab" text-anchor="middle">E-14</text><line x1="714.9" y1="334" x2="714.9" y2="339" class="tick"/><text x="714.9" y="352" class="xlab" text-anchor="middle">E-7</text><line x1="782.5" y1="334" x2="782.5" y2="339" class="tick"/><text x="782.5" y="352" class="xlab" text-anchor="middle">E-3</text><line x1="833.2" y1="334" x2="833.2" y2="339" class="tick"/><text x="833.2" y="352" class="xlab" text-anchor="middle">E-DAY</text><line x1="883.9" y1="334" x2="883.9" y2="339" class="tick"/><text x="883.9" y="352" class="xlab" text-anchor="middle">E+3</text><line x1="951.5" y1="334" x2="951.5" y2="339" class="tick"/><text x="951.5" y="352" class="xlab" text-anchor="middle">E+7</text><text x="74" y="32" class="ptitle">2026 midterm (in progress) — Election Day Tue Nov 3, 2026 · data through Oct 17</text></svg>
+<table>
+<thead><tr><th>Election</th><th>E-Day reports / orders</th><th>E-Day donations</th><th>E−7→E−1 rep / don</th><th>E−45 → E−8 rep / don<br><span class="mut">(2026: E−45 → today)</span></th><th>Reports on E-Day</th></tr></thead>
+<tbody>
+<tr><th>2018 midterm</th>
+        <td>2,087 / 697</td>
+        <td>9,227<br><span class="mut">$312,791</span></td>
+        <td>223 / 1,274</td>
+        <td>23 / 205</td>
+        <td>89%</td></tr><tr><th>2022 midterm</th>
+        <td>332 / 189</td>
+        <td>1,496<br><span class="mut">$82,505</span></td>
+        <td>107 / 524</td>
+        <td>15 / 376</td>
+        <td>73%</td></tr><tr><th>2026 midterm<br><span class="mut">in progress · E−17</span></th>
+    <td class="mut">— ahead —</td><td class="mut">— ahead —</td><td class="mut">— ahead —</td>
+    <td>26 / 251<br><span class="mut">$8,498 donations to date</span></td>
+    <td class="mut">TBD</td></tr>
+</tbody></table>
+<div class="sub" style="margin-top:14px">Takeaway: midterm demand is overwhelmingly an Election-Day phenomenon — reports ramp only in the final ~4 days, then spike 10–20×. Donations ramp slightly earlier (~E−10) and hit 4–5× report volume on E-Day ($313K in 2018, $83K in 2022). 2026 donations are running well ahead of both past cycles at E−17 — already matching their final-week daily rates — while 2026 reports (26 since Sept 1) are tracking the historical near-zero pattern. Expect the report surge to begin ~E−10.</div>
+
+<script>
+(function () {
+  var D = {"years": [{"yr": 2018, "color": "#e4572e", "edate": "2018-11-06", "points": [{"k": -45, "date": "2018-09-22", "rep": 1, "ord": 1, "don": 0, "dol": 0}, {"k": -44, "date": "2018-09-23", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -43, "date": "2018-09-24", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -42, "date": "2018-09-25", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -41, "date": "2018-09-26", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -40, "date": "2018-09-27", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -39, "date": "2018-09-28", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -38, "date": "2018-09-29", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -37, "date": "2018-09-30", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -36, "date": "2018-10-01", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -35, "date": "2018-10-02", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -34, "date": "2018-10-03", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -33, "date": "2018-10-04", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -32, "date": "2018-10-05", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -31, "date": "2018-10-06", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -30, "date": "2018-10-07", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -29, "date": "2018-10-08", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -28, "date": "2018-10-09", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -27, "date": "2018-10-10", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -26, "date": "2018-10-11", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -25, "date": "2018-10-12", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -24, "date": "2018-10-13", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -23, "date": "2018-10-14", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -22, "date": "2018-10-15", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -21, "date": "2018-10-16", "rep": 0, "ord": 0, "don": 1, "dol": 19}, {"k": -20, "date": "2018-10-17", "rep": 1, "ord": 1, "don": 8, "dol": 192}, {"k": -19, "date": "2018-10-18", "rep": 1, "ord": 1, "don": 13, "dol": 297}, {"k": -18, "date": "2018-10-19", "rep": 4, "ord": 4, "don": 37, "dol": 2985}, {"k": -17, "date": "2018-10-20", "rep": 0, "ord": 0, "don": 2, "dol": 116}, {"k": -16, "date": "2018-10-21", "rep": 0, "ord": 0, "don": 3, "dol": 145}, {"k": -15, "date": "2018-10-22", "rep": 1, "ord": 1, "don": 11, "dol": 205}, {"k": -14, "date": "2018-10-23", "rep": 3, "ord": 2, "don": 5, "dol": 96}, {"k": -13, "date": "2018-10-24", "rep": 3, "ord": 1, "don": 14, "dol": 633}, {"k": -12, "date": "2018-10-25", "rep": 7, "ord": 6, "don": 69, "dol": 1879}, {"k": -11, "date": "2018-10-26", "rep": 2, "ord": 0, "don": 24, "dol": 702}, {"k": -10, "date": "2018-10-27", "rep": 0, "ord": 0, "don": 3, "dol": 48}, {"k": -9, "date": "2018-10-28", "rep": 0, "ord": 0, "don": 8, "dol": 522}, {"k": -8, "date": "2018-10-29", "rep": 0, "ord": 0, "don": 7, "dol": 114}, {"k": -7, "date": "2018-10-30", "rep": 3, "ord": 2, "don": 9, "dol": 323}, {"k": -6, "date": "2018-10-31", "rep": 2, "ord": 0, "don": 5, "dol": 261}, {"k": -5, "date": "2018-11-01", "rep": 1, "ord": 0, "don": 10, "dol": 298}, {"k": -4, "date": "2018-11-02", "rep": 10, "ord": 2, "don": 48, "dol": 1806}, {"k": -3, "date": "2018-11-03", "rep": 39, "ord": 14, "don": 357, "dol": 11203}, {"k": -2, "date": "2018-11-04", "rep": 55, "ord": 29, "don": 168, "dol": 5372}, {"k": -1, "date": "2018-11-05", "rep": 113, "ord": 57, "don": 677, "dol": 27492}, {"k": 0, "date": "2018-11-06", "rep": 2087, "ord": 697, "don": 9227, "dol": 312791}, {"k": 1, "date": "2018-11-07", "rep": 5, "ord": 3, "don": 11, "dol": 424}, {"k": 2, "date": "2018-11-08", "rep": 4, "ord": 2, "don": 3, "dol": 14}, {"k": 3, "date": "2018-11-09", "rep": 1, "ord": 1, "don": 1, "dol": 19}, {"k": 4, "date": "2018-11-10", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": 5, "date": "2018-11-11", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": 6, "date": "2018-11-12", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": 7, "date": "2018-11-13", "rep": 0, "ord": 0, "don": 0, "dol": 0}]}, {"yr": 2022, "color": "#1f6fb2", "edate": "2022-11-08", "points": [{"k": -45, "date": "2022-09-24", "rep": 0, "ord": 0, "don": 1, "dol": 9}, {"k": -44, "date": "2022-09-25", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -43, "date": "2022-09-26", "rep": 0, "ord": 1, "don": 0, "dol": 0}, {"k": -42, "date": "2022-09-27", "rep": 0, "ord": 1, "don": 0, "dol": 0}, {"k": -41, "date": "2022-09-28", "rep": 0, "ord": 2, "don": 3, "dol": 72}, {"k": -40, "date": "2022-09-29", "rep": 0, "ord": 1, "don": 2, "dol": 29}, {"k": -39, "date": "2022-09-30", "rep": 0, "ord": 0, "don": 3, "dol": 23}, {"k": -38, "date": "2022-10-01", "rep": 0, "ord": 0, "don": 2, "dol": 9}, {"k": -37, "date": "2022-10-02", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -36, "date": "2022-10-03", "rep": 0, "ord": 1, "don": 1, "dol": 315}, {"k": -35, "date": "2022-10-04", "rep": 0, "ord": 0, "don": 1, "dol": 19}, {"k": -34, "date": "2022-10-05", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -33, "date": "2022-10-06", "rep": 0, "ord": 0, "don": 1, "dol": 48}, {"k": -32, "date": "2022-10-07", "rep": 0, "ord": 1, "don": 1, "dol": 19}, {"k": -31, "date": "2022-10-08", "rep": 0, "ord": 0, "don": 1, "dol": 9}, {"k": -30, "date": "2022-10-09", "rep": 0, "ord": 0, "don": 2, "dol": 101}, {"k": -29, "date": "2022-10-10", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -28, "date": "2022-10-11", "rep": 1, "ord": 1, "don": 1, "dol": 19}, {"k": -27, "date": "2022-10-12", "rep": 0, "ord": 0, "don": 2, "dol": 14}, {"k": -26, "date": "2022-10-13", "rep": 0, "ord": 0, "don": 1, "dol": 5}, {"k": -25, "date": "2022-10-14", "rep": 0, "ord": 0, "don": 5, "dol": 81}, {"k": -24, "date": "2022-10-15", "rep": 0, "ord": 0, "don": 2, "dol": 96}, {"k": -23, "date": "2022-10-16", "rep": 0, "ord": 0, "don": 1, "dol": 9}, {"k": -22, "date": "2022-10-17", "rep": 0, "ord": 0, "don": 2, "dol": 58}, {"k": -21, "date": "2022-10-18", "rep": 0, "ord": 0, "don": 1, "dol": 19}, {"k": -20, "date": "2022-10-19", "rep": 0, "ord": 2, "don": 84, "dol": 3391}, {"k": -19, "date": "2022-10-20", "rep": 0, "ord": 0, "don": 18, "dol": 621}, {"k": -18, "date": "2022-10-21", "rep": 1, "ord": 2, "don": 10, "dol": 152}, {"k": -17, "date": "2022-10-22", "rep": 0, "ord": 0, "don": 6, "dol": 275}, {"k": -16, "date": "2022-10-23", "rep": 0, "ord": 0, "don": 4, "dol": 110}, {"k": -15, "date": "2022-10-24", "rep": 2, "ord": 2, "don": 6, "dol": 95}, {"k": -14, "date": "2022-10-25", "rep": 1, "ord": 2, "don": 10, "dol": 291}, {"k": -13, "date": "2022-10-26", "rep": 0, "ord": 9, "don": 97, "dol": 5137}, {"k": -12, "date": "2022-10-27", "rep": 0, "ord": 3, "don": 20, "dol": 5554}, {"k": -11, "date": "2022-10-28", "rep": 2, "ord": 25, "don": 57, "dol": 2268}, {"k": -10, "date": "2022-10-29", "rep": 6, "ord": 4, "don": 12, "dol": 555}, {"k": -9, "date": "2022-10-30", "rep": 1, "ord": 1, "don": 10, "dol": 570}, {"k": -8, "date": "2022-10-31", "rep": 1, "ord": 4, "don": 9, "dol": 386}, {"k": -7, "date": "2022-11-01", "rep": 6, "ord": 3, "don": 11, "dol": 604}, {"k": -6, "date": "2022-11-02", "rep": 0, "ord": 1, "don": 4, "dol": 212}, {"k": -5, "date": "2022-11-03", "rep": 8, "ord": 7, "don": 69, "dol": 3496}, {"k": -4, "date": "2022-11-04", "rep": 40, "ord": 36, "don": 50, "dol": 3454}, {"k": -3, "date": "2022-11-05", "rep": 12, "ord": 8, "don": 29, "dol": 1273}, {"k": -2, "date": "2022-11-06", "rep": 20, "ord": 8, "don": 38, "dol": 2712}, {"k": -1, "date": "2022-11-07", "rep": 21, "ord": 20, "don": 323, "dol": 20105}, {"k": 0, "date": "2022-11-08", "rep": 332, "ord": 189, "don": 1496, "dol": 82505}, {"k": 1, "date": "2022-11-09", "rep": 0, "ord": 0, "don": 10, "dol": 444}, {"k": 2, "date": "2022-11-10", "rep": 0, "ord": 0, "don": 1, "dol": 5}, {"k": 3, "date": "2022-11-11", "rep": 0, "ord": 0, "don": 1, "dol": 19}, {"k": 4, "date": "2022-11-12", "rep": 0, "ord": 0, "don": 5, "dol": 130}, {"k": 5, "date": "2022-11-13", "rep": 0, "ord": 0, "don": 1, "dol": 5}, {"k": 6, "date": "2022-11-14", "rep": 0, "ord": 0, "don": 4, "dol": 62}, {"k": 7, "date": "2022-11-15", "rep": 0, "ord": 0, "don": 0, "dol": 0}]}, {"yr": 2026, "color": "#7b3fa0", "edate": "2026-11-03", "points": [{"k": -45, "date": "2026-09-19", "rep": 0, "ord": 0, "don": 4, "dol": 125}, {"k": -44, "date": "2026-09-20", "rep": 0, "ord": 0, "don": 1, "dol": 19}, {"k": -43, "date": "2026-09-21", "rep": 0, "ord": 0, "don": 4, "dol": 107}, {"k": -42, "date": "2026-09-22", "rep": 0, "ord": 0, "don": 3, "dol": 48}, {"k": -41, "date": "2026-09-23", "rep": 0, "ord": 0, "don": 0, "dol": 0}, {"k": -40, "date": "2026-09-24", "rep": 3, "ord": 0, "don": 15, "dol": 350}, {"k": -39, "date": "2026-09-25", "rep": 0, "ord": 0, "don": 2, "dol": 101}, {"k": -38, "date": "2026-09-26", "rep": 1, "ord": 0, "don": 25, "dol": 685}, {"k": -37, "date": "2026-09-27", "rep": 0, "ord": 0, "don": 2, "dol": 29}, {"k": -36, "date": "2026-09-28", "rep": 4, "ord": 0, "don": 3, "dol": 120}, {"k": -35, "date": "2026-09-29", "rep": 0, "ord": 0, "don": 1, "dol": 19}, {"k": -34, "date": "2026-09-30", "rep": 0, "ord": 0, "don": 3, "dol": 77}, {"k": -33, "date": "2026-10-01", "rep": 0, "ord": 0, "don": 39, "dol": 1542}, {"k": -32, "date": "2026-10-02", "rep": 1, "ord": 0, "don": 8, "dol": 235}, {"k": -31, "date": "2026-10-03", "rep": 0, "ord": 0, "don": 14, "dol": 710}, {"k": -30, "date": "2026-10-04", "rep": 0, "ord": 0, "don": 6, "dol": 100}, {"k": -29, "date": "2026-10-05", "rep": 0, "ord": 0, "don": 9, "dol": 119}, {"k": -28, "date": "2026-10-06", "rep": 0, "ord": 0, "don": 17, "dol": 403}, {"k": -27, "date": "2026-10-07", "rep": 17, "ord": 1, "don": 5, "dol": 188}, {"k": -26, "date": "2026-10-08", "rep": 0, "ord": 0, "don": 2, "dol": 101}, {"k": -25, "date": "2026-10-09", "rep": 0, "ord": 0, "don": 24, "dol": 1974}, {"k": -24, "date": "2026-10-10", "rep": 0, "ord": 0, "don": 13, "dol": 234}, {"k": -23, "date": "2026-10-11", "rep": 0, "ord": 0, "don": 11, "dol": 162}, {"k": -22, "date": "2026-10-12", "rep": 0, "ord": 0, "don": 3, "dol": 28}, {"k": -21, "date": "2026-10-13", "rep": 0, "ord": 0, "don": 2, "dol": 33}, {"k": -20, "date": "2026-10-14", "rep": 0, "ord": 0, "don": 6, "dol": 256}, {"k": -19, "date": "2026-10-15", "rep": 0, "ord": 0, "don": 3, "dol": 43}, {"k": -18, "date": "2026-10-16", "rep": 0, "ord": 0, "don": 3, "dol": 77}, {"k": -17, "date": "2026-10-17", "rep": 0, "ord": 0, "don": 23, "dol": 613}]}], "kmin": -45, "kmax": 7, "todayK": -17};
+  var SERIES = [
+    {key: "rep", label: "Reports", dash: null},
+    {key: "ord", label: "Orders", dash: "7 5"},
+    {key: "don", label: "Donations", dash: "2 3"}
+  ];
+  var W = 1240, H = 640, L = 78, R = 26, T = 44, B = 56,
+      PW = W - L - R, PH = H - T - B,
+      YMAX = 10000, LOGMAX = Math.log10(YMAX + 500);
+  var state = {scale: "log", yr: {}, ser: {}};
+  D.years.forEach(function (y) { state.yr[y.yr] = true; });
+  SERIES.forEach(function (s) { state.ser[s.key] = true; });
+  var NS = "http://www.w3.org/2000/svg";
+  var cont = document.getElementById("comp");
+  var tip = document.getElementById("tip");
+
+  function el(tag, attrs, parent) {
+    var e = document.createElementNS(NS, tag);
+    for (var a in attrs) e.setAttribute(a, attrs[a]);
+    if (parent) parent.appendChild(e);
+    return e;
+  }
+  function x(k) { return L + PW * (k - D.kmin) / (D.kmax - D.kmin); }
+  function y(v) {
+    if (v <= 0) return T + PH;
+    if (state.scale === "log") return T + PH - PH * Math.log10(v + 1) / LOGMAX;
+    return T + PH - PH * v / YMAX;
+  }
+  function fmtN(n) { return n.toLocaleString("en-US"); }
+  function money(n) { return "$" + n.toLocaleString("en-US"); }
+
+  function render() {
+    while (cont.firstChild) cont.removeChild(cont.firstChild);
+    var svg = el("svg", {viewBox: "0 0 " + W + " " + H, "class": "ichart"}, cont);
+
+    // y gridlines
+    var ticks = state.scale === "log" ? [1, 10, 100, 1000, 10000] : [0, 2500, 5000, 7500, 10000];
+    ticks.forEach(function (v) {
+      var yy = y(v === 0 ? 0 : v);
+      if (v === 0 && state.scale === "log") yy = T + PH;
+      el("line", {x1: L, y1: yy, x2: W - R, y2: yy, "class": "grid"}, svg);
+      var t = el("text", {x: L - 8, y: yy + 4, "class": "ylab", "text-anchor": "end"}, svg);
+      t.textContent = fmtN(v);
+    });
+    var ylabel = el("text", {x: 16, y: T + 16, "class": "ylab2"}, svg);
+    ylabel.textContent = state.scale === "log" ? "count / day (log)" : "count / day (linear)";
+
+    // pre-election shading, future shading, E-day, TODAY
+    el("rect", {x: L, y: T, width: x(0) - L, height: PH, "class": "pre"}, svg);
+    var tx = x(D.todayK);
+    el("rect", {x: tx, y: T, width: W - R - tx, height: PH, "class": "future"}, svg);
+    var fl = el("text", {x: (tx + W - R) / 2, y: T + PH - 12, "class": "flab", "text-anchor": "middle"}, svg);
+    fl.textContent = "2026 surge happens here \u2192";
+    el("line", {x1: x(0), y1: T, x2: x(0), y2: T + PH, "class": "eday"}, svg);
+    var edl = el("text", {x: x(0) + 6, y: T + PH - 8, "class": "ann"}, svg);
+    edl.textContent = "E-DAY";
+    el("line", {x1: tx, y1: T, x2: tx, y2: T + PH, "class": "today"}, svg);
+    var tl = el("text", {x: tx + 6, y: T + 16, "class": "tlab"}, svg);
+    tl.textContent = "TODAY \u00b7 Oct 17, 2026 (E\u221217)";
+
+    // x axis
+    el("line", {x1: L, y1: T + PH, x2: W - R, y2: T + PH, "class": "axis"}, svg);
+    [-45, -30, -21, -14, -7, -3, 0, 3, 7].forEach(function (k) {
+      var xx = x(k);
+      el("line", {x1: xx, y1: T + PH, x2: xx, y2: T + PH + 5, "class": "tick"}, svg);
+      var t = el("text", {x: xx, y: T + PH + 20, "class": "xlab", "text-anchor": "middle"}, svg);
+      t.textContent = k === 0 ? "E-DAY" : (k < 0 ? "E" + k : "E+" + k);
+    });
+
+    // series lines (path breaks at zero values)
+    D.years.forEach(function (Y) {
+      SERIES.forEach(function (S) {
+        if (!state.yr[Y.yr] || !state.ser[S.key]) return;
+        var d = "", pen = false;
+        Y.points.forEach(function (p) {
+          var v = p[S.key];
+          if (v <= 0) { pen = false; return; }
+          d += (pen ? "L" : "M") + x(p.k).toFixed(1) + "," + y(v).toFixed(1);
+          pen = true;
+        });
+        var attrs = {d: d, "class": "cline l" + Y.yr};
+        if (S.dash) attrs["stroke-dasharray"] = S.dash;
+        el("path", attrs, svg);
+        Y.points.forEach(function (p) {
+          var v = p[S.key];
+          if (v > 0) el("circle", {cx: x(p.k).toFixed(1), cy: y(v).toFixed(1), r: 2.5, "class": "cdot l" + Y.yr}, svg);
+        });
+      });
+    });
+
+    // crosshair group + capture rect
+    var cross = el("g", {style: "display:none"}, svg);
+    var vline = el("line", {y1: T, y2: T + PH, "class": "cross"}, cross);
+    var dots = [];
+    D.years.forEach(function (Y) {
+      SERIES.forEach(function (S) {
+        dots.push({Y: Y, S: S, c: el("circle", {r: 5, "class": "hdot l" + Y.yr, style: "display:none"}, cross)});
+      });
+    });
+    var cap = el("rect", {x: L, y: T, width: PW, height: PH, fill: "transparent"}, svg);
+    cap.addEventListener("mousemove", function (ev) {
+      var r = svg.getBoundingClientRect();
+      var mx = (ev.clientX - r.left) * (W / r.width);
+      var k = Math.round(D.kmin + (mx - L) / PW * (D.kmax - D.kmin));
+      k = Math.max(D.kmin, Math.min(D.kmax, k));
+      cross.style.display = "";
+      vline.setAttribute("x1", x(k)); vline.setAttribute("x2", x(k));
+      var rows = "";
+      D.years.forEach(function (Y, yi) {
+        var p = null;
+        for (var i = 0; i < Y.points.length; i++) if (Y.points[i].k === k) { p = Y.points[i]; break; }
+        dots.slice(yi * SERIES.length, yi * SERIES.length + SERIES.length).forEach(function (d2) { d2.c.style.display = "none"; });
+        if (!p) {
+          rows += '<div class="tr dim"><span class="dot" style="background:' + Y.color + '"></span>' + Y.yr + ' — no data yet</div>';
+          return;
+        }
+        SERIES.forEach(function (S, si) {
+          var dd = dots[yi * SERIES.length + si];
+          var v = p[S.key];
+          if (v > 0 && state.yr[Y.yr] && state.ser[S.key]) {
+            dd.c.style.display = "";
+            dd.c.setAttribute("cx", x(k)); dd.c.setAttribute("cy", y(v));
+          } else dd.c.style.display = "none";
+        });
+        var extra = p.dol ? ' <span class="dol">(' + money(p.dol) + ')</span>' : "";
+        rows += '<div class="tr"><span class="dot" style="background:' + Y.color + '"></span><b>' + Y.yr + '</b> ' + p.date +
+          ' &nbsp;\u00b7&nbsp; ' + fmtN(p.rep) + ' rep \u00b7 ' + fmtN(p.ord) + ' ord \u00b7 <b>' + fmtN(p.don) + ' don</b>' + extra + '</div>';
+      });
+      var klab = k === 0 ? "E-DAY" : (k < 0 ? "E\u2212" + (-k) : "E+" + k);
+      tip.innerHTML = '<div class="th">' + klab + " \u2014 days to/from Election Day</div>" + rows;
+      tip.style.display = "block";
+      var cr = cont.getBoundingClientRect();
+      var px = ev.clientX - cr.left + 16, py = ev.clientY - cr.top + 14;
+      if (px + tip.offsetWidth > cr.width - 8) px = ev.clientX - cr.left - tip.offsetWidth - 16;
+      if (py + tip.offsetHeight > cr.height - 8) py = ev.clientY - cr.top - tip.offsetHeight - 14;
+      tip.style.left = px + "px"; tip.style.top = py + "px";
+    });
+    cap.addEventListener("mouseleave", function () {
+      cross.style.display = "none"; tip.style.display = "none";
+    });
+  }
+
+  // controls: year chips, series chips, scale toggle
+  var ctl = document.getElementById("compctl");
+  D.years.forEach(function (Y) {
+    var b = document.createElement("button");
+    b.className = "chip";
+    b.innerHTML = '<span class="swatch" style="background:' + Y.color + '"></span>' + Y.yr;
+    b.onclick = function () { state.yr[Y.yr] = !state.yr[Y.yr]; b.classList.toggle("off"); render(); };
+    ctl.appendChild(b);
+  });
+  SERIES.forEach(function (S) {
+    var b = document.createElement("button");
+    b.className = "chip";
+    var sw = '<span class="swatch line' + (S.dash ? ' dashed' : '') + '"></span>';
+    b.innerHTML = sw + S.label;
+    b.onclick = function () { state.ser[S.key] = !state.ser[S.key]; b.classList.toggle("off"); render(); };
+    ctl.appendChild(b);
+  });
+  ["log", "linear"].forEach(function (sc) {
+    var b = document.createElement("button");
+    b.className = "chip scale" + (sc === "log" ? " active" : "");
+    b.textContent = sc;
+    b.onclick = function () {
+      state.scale = sc;
+      ctl.querySelectorAll(".scale").forEach(function (x2) { x2.classList.remove("active"); });
+      b.classList.add("active");
+      render();
+    };
+    ctl.appendChild(b);
+  });
+
+  render();
+})();
+</script>
+
+</body></html>
