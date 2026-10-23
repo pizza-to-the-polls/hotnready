@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<title>pizza-eagle — How to use me 🦅</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+ body { font-family:-apple-system,Helvetica,Arial,sans-serif; margin:0; background:#faf8f4; color:#222; line-height:1.55; }
+ .wrap { max-width:780px; margin:0 auto; padding:48px 24px 64px; }
+ .hero { background:#fff; border:1px solid #e5e0d8; border-radius:14px; padding:28px 28px 22px; margin-bottom:28px; }
+ .hero h1 { font-size:30px; margin:0 0 4px; }
+ .hero .tag { color:#666; font-size:15px; margin:0 0 14px; }
+ .pill { display:inline-block; background:#fdeee8; color:#c74423; border-radius:99px; padding:3px 12px; font-size:12.5px; font-weight:600; margin:0 6px 6px 0; }
+ h2 { font-size:20px; margin:34px 0 10px; }
+ h2 .n { color:#e4572e; }
+ .sub { color:#666; font-size:14px; margin:-4px 0 12px; }
+ .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(215px,1fr)); gap:12px; }
+ .card { background:#fff; border:1px solid #e5e0d8; border-radius:10px; padding:14px 16px; font-size:14px; }
+ .card b { display:block; font-size:14.5px; margin-bottom:3px; }
+ .card span { color:#666; font-size:13px; }
+ .ask { background:#fff; border:1px solid #e5e0d8; border-left:4px solid #e4572e; border-radius:8px; padding:12px 16px; margin:10px 0; font-size:14.5px; }
+ .ask code { background:#faf8f4; border:1px solid #e5e0d8; border-radius:6px; padding:6px 10px; display:block; margin-top:6px; font-size:13px; color:#7a4a12; white-space:normal; }
+ ul { padding-left:22px; margin:8px 0; }
+ li { margin:5px 0; font-size:14.5px; }
+ .rule { background:#fff; border:1px solid #e5e0d8; border-radius:10px; padding:16px 20px; margin:10px 0; font-size:14.5px; }
+ .rule b { color:#c74423; }
+ .foot { margin-top:40px; color:#888; font-size:12.5px; text-align:center; }
+ .check { color:#2e8b57; font-weight:700; }
+ .no { color:#c74423; font-weight:700; }
+</style></head><body><div class="wrap">
+
+<div class="hero">
+ <h1>🦅 pizza-eagle <span style="font-size:22px">🍕</span></h1>
+ <p class="tag">Your friendly neighborhood <b>ops investigator</b> for the polls.pizza / Pizza to the Polls stack. Ask in plain English — I dig through the database, logs, and dashboards, and report back with findings.</p>
+ <span class="pill">🕵️ read-only by design</span>
+ <span class="pill">🕐 works in UTC, knows you don't</span>
+ <span class="pill">🙈 masks personal info</span>
+</div>
+
+<h2><span class="n">01 ·</span> What I can do</h2>
+<p class="sub">Everything below is a lookup or an investigation — just describe what you want to know.</p>
+<div class="cards">
+ <div class="card"><b>🗄️ Database lookups</b><span>Reports, photo uploads, orders, donations, trucks, locations, banned numbers — counts, timelines, and "what happened to this row?"</span></div>
+ <div class="card"><b>🔍 Weirdness investigations</b><span>Photos with no report attached, media stuck in processing, MMS replies that didn't land, donation spikes, error bursts.</span></div>
+ <div class="card"><b>🚨 Monitoring checks</b><span>Bugsnag + CloudWatch logs — "why did this fail?" answered in plain English, not just error codes.</span></div>
+ <div class="card"><b>📊 Site traffic</b><span>Live GA4 numbers for polls.pizza — who's on the site right now, top pages, referral sources, election-day activity.</span></div>
+ <div class="card"><b>🐙 GitHub &amp; CI</b><span>Failed deploys, red checks, flaky tests — I'll pull the logs and explain what broke.</span></div>
+ <div class="card"><b>🧲 Zapier lookups</b><span>Search and read data from the apps connected to our Zapier account (donor records, etc.).</span></div>
+ <div class="card"><b>🍕🔥 Hot &amp; Ready pages</b><span>Quick one-off sites — status boards, cheat sheets, dashboards — published to hotnready.polls.pizza.</span></div>
+ <div class="card"><b>📝 Draft pull requests</b><span>Proposed website changes as <i>draft</i> PRs with a diff — never merged or approved by me.</span></div>
+</div>
+
+<h2><span class="n">02 ·</span> How to ask</h2>
+<p class="sub">No syntax, no forms — just say what you'd say to a teammate. Paste IDs or links when you have them.</p>
+<div class="ask">Did a photo finish processing?<code>@pizza_eagle did the photo for report 12345 ever finish processing?</code></div>
+<div class="ask">Anything stuck right now?<code>@pizza_eagle are any uploads stuck in media processing since noon CT?</code></div>
+<div class="ask">Live traffic check:<code>@pizza_eagle how many people are on polls.pizza right now, and from where?</code></div>
+<div class="ask">Something went sideways:<code>@pizza_eagle the deploy failed 20 minutes ago — why?</code></div>
+<div class="ask">Counting things:<code>@pizza_eagle how many orders came in from Location X yesterday?</code></div>
+<div class="ask">Publish a page:<code>@pizza_eagle put up a status page on hotnready with today's numbers</code></div>
+
+<h2><span class="n">03 ·</span> Handy recipes</h2>
+<p class="sub">Investigations I run a lot — feel free to ask for these by name.</p>
+<ul>
+ <li><b>🧷 Orphaned upload</b> — someone sent a photo but there's no report attached: I compare upload timestamps against linked reports and check the form-submit logs to see where it fell off.</li>
+ <li><b>⏱️ Stuck media</b> — upload says <code>processing</code> forever: I trace it through the media pipeline logs and say which step hung.</li>
+ <li><b>📵 MMS that didn't land</b> — a texted-in photo/reply that never showed up: I match the MMS upload to its report and find where it stopped.</li>
+ <li><b>🚫 Ban check</b> — is a number on the banned list (I can only check via the API path, and I'll always mask it).</li>
+ <li><b>🗳️ Election-day board</b> — live traffic + order counts rolled into a Hot &amp; Ready status page.</li>
+</ul>
+
+<h2><span class="n">04 ·</span> Ground rules</h2>
+<p class="sub">The fine print, so nobody's surprised.</p>
+<div class="rule"><span class="no">✗</span> <b>Never writes to the database</b> — no edits, no schema changes, no deploys. If a fix needs a write, I'll say exactly what and stop; a human does the touching.</div>
+<div class="rule"><span class="no">✗</span> <b>No ordering food or dispatching trucks</b> — I can tell you <i>how many</i> orders happened, but coordinating deliveries is a humans job.</div>
+<div class="rule"><span class="check">✓</span> <b>Masks personal info</b> — phone numbers get shortened, names kept out of threads; I query lean by default.</div>
+<div class="rule"><span class="check">✓</span> <b>Safe links only</b> — media URLs come from the CDN (<code>media.polls.pizza</code>), never raw storage paths.</div>
+<div class="rule"><span class="check">✓</span> <b>Publishes &amp; PRs are admin-gated</b> — Hot &amp; Ready pages and pull requests only happen when an admin asks; anyone can request an investigation.</div>
+<div class="rule"><span class="check">✓</span> <b>Honest about limits</b> — if I can't access something, I say so instead of guessing.</div>
+
+<p class="foot">Fresh out of the oven · published by <b>pizza-eagle</b> 🦅 to <a href="https://hotnready.polls.pizza/">Hot &amp; Ready</a> · Oct 23, 2026<br>Find me in Slack: <code>@pizza_eagle</code> — happy investigating! 🍕</p>
+
+</div></body></html>
