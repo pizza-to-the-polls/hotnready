@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🍕 "Leave site?" Demo — polls.pizza report form</title>
+<style>
+  :root {
+    --red: #d62828;
+    --red-dark: #a61b1b;
+    --cream: #fff8f0;
+    --ink: #2b2320;
+    --muted: #7a6a60;
+    --card: #ffffff;
+    --green: #2e9e5b;
+    --amber: #b45309;
+    --amber-bg: #fef3c7;
+    --green-bg: #dcfce7;
+    --border: #eadfd4;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.5;
+  }
+
+  /* ---- sticky status banner ---- */
+  #statusBar {
+    position: sticky; top: 0; z-index: 50;
+    padding: 10px 16px;
+    font-weight: 600; font-size: 15px;
+    text-align: center;
+    border-bottom: 2px solid rgba(0,0,0,.06);
+    transition: background .3s;
+  }
+  #statusBar.safe    { background: var(--green-bg); color: #14532d; }
+  #statusBar.armed   { background: var(--amber-bg); color: var(--amber); }
+  #statusBar.armed .pulse { display: inline-block; animation: pulse 1.2s infinite; }
+  @keyframes pulse { 0%,100% {opacity:1} 50% {opacity:.45} }
+
+  .wrap { max-width: 720px; margin: 0 auto; padding: 24px 16px 80px; }
+  header.hero { text-align: center; margin-bottom: 28px; }
+  .hero h1 { font-size: 28px; margin: 8px 0 6px; }
+  .hero h1 .pz { color: var(--red); }
+  .hero p.sub { color: var(--muted); margin: 0; font-size: 15px; }
+
+  .explainer {
+    background: #fff; border: 1px solid var(--border); border-radius: 12px;
+    padding: 14px 18px; margin-bottom: 28px; font-size: 14px; color: var(--muted);
+  }
+  .explainer b { color: var(--ink); }
+
+  .card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 14px; padding: 20px 20px 22px; margin-bottom: 22px;
+    box-shadow: 0 1px 3px rgba(43,35,32,.05);
+  }
+  .card h2 { font-size: 18px; margin: 0 0 4px; }
+  .card h2 .step {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 26px; height: 26px; border-radius: 50%;
+    background: var(--red); color: #fff; font-size: 14px;
+    margin-right: 8px; vertical-align: middle;
+  }
+  .card p.hint { margin: 0 0 14px; font-size: 13.5px; color: var(--muted); }
+
+  /* ---- upload dropzone ---- */
+  #dropzone {
+    border: 2px dashed #d8c9bc; border-radius: 12px;
+    padding: 30px 16px; text-align: center; cursor: pointer;
+    transition: border-color .15s, background .15s;
+  }
+  #dropzone:hover, #dropzone.drag { border-color: var(--red); background: #fff3ee; }
+  #dropzone .big { font-size: 34px; }
+  #dropzone .bt { color: var(--red); font-weight: 600; text-decoration: underline; }
+  #dropzone small { color: var(--muted); display: block; margin-top: 4px; }
+
+  #uploadArea { display: none; }
+  .previewRow { display: flex; gap: 16px; align-items: flex-start; }
+  #previewImg {
+    width: 130px; height: 130px; object-fit: cover;
+    border-radius: 10px; border: 1px solid var(--border);
+  }
+  .upInfo { flex: 1; }
+  .progressOuter {
+    height: 10px; background: #f0e7dd; border-radius: 99px; overflow: hidden; margin: 10px 0 6px;
+  }
+  .progressInner {
+    height: 100%; width: 0%; background: var(--red); border-radius: 99px;
+    transition: width .18s;
+  }
+  .upStatus { font-size: 14px; }
+  .upStatus.done { color: var(--green); font-weight: 600; }
+  .removeLink {
+    background: none; border: none; color: var(--muted); font-size: 13px;
+    text-decoration: underline; cursor: pointer; padding: 0; margin-top: 10px;
+  }
+
+  /* ---- form ---- */
+  label { display: block; font-weight: 600; font-size: 14px; margin: 14px 0 4px; }
+  label .req { color: var(--red); }
+  input[type=text], select, textarea {
+    width: 100%; padding: 10px 12px; font-size: 15px;
+    border: 1px solid #d8c9bc; border-radius: 8px; background: #fff;
+    font-family: inherit; color: var(--ink);
+  }
+  input:focus, select:focus, textarea:focus { outline: 2px solid var(--red); outline-offset: 0; border-color: var(--red); }
+  textarea { resize: vertical; min-height: 70px; }
+  .twoCol { display: flex; gap: 12px; }
+  .twoCol > div { flex: 1; }
+  .formError { display: none; color: var(--red); font-size: 13.5px; font-weight: 600; margin-top: 10px; }
+
+  .btn {
+    display: inline-block; border: none; border-radius: 10px; cursor: pointer;
+    font-size: 15px; font-weight: 600; padding: 11px 20px; font-family: inherit;
+    transition: transform .05s, background .15s;
+  }
+  .btn:active { transform: scale(.98); }
+  .btn.primary { background: var(--red); color: #fff; }
+  .btn.primary:hover { background: var(--red-dark); }
+  .btn.primary:disabled { background: #e2b3ae; cursor: default; }
+  .btn.ghost { background: #f6ede3; color: var(--ink); }
+  .btn.ghost:hover { background: #efe2d3; }
+
+  #submitRow { margin-top: 18px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .spinner {
+    display: none; width: 18px; height: 18px;
+    border: 3px solid #f0d9d5; border-top-color: var(--red);
+    border-radius: 50%; animation: spin .7s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ---- try-to-leave card ---- */
+  .leaveBtns { display: flex; gap: 10px; flex-wrap: wrap; margin: 14px 0; }
+  .leaveBtns .btn { text-decoration: none; }
+  .notes { font-size: 13.5px; color: var(--muted); }
+  .notes li { margin-bottom: 6px; }
+
+  /* ---- fake browser dialog mock ---- */
+  .fakeDialog {
+    max-width: 420px; margin: 6px auto 0;
+    border-radius: 10px; overflow: hidden;
+    box-shadow: 0 12px 32px rgba(0,0,0,.22);
+    border: 1px solid #c9c9c9; font-size: 14px;
+  }
+  .fd-title { background: #e8e8e8; color: #444; padding: 8px 12px; font-size: 13px; text-align: center; }
+  .fd-body { background: #fff; padding: 18px 18px 14px; text-align: center; }
+  .fd-body .fd-ico { font-size: 30px; }
+  .fd-body .fd-msg { font-weight: 600; margin: 8px 0 2px; font-size: 15px; }
+  .fd-body .fd-sub { color: #666; font-size: 13px; }
+  .fd-btns { background: #fff; padding: 0 14px 14px; display: flex; gap: 10px; justify-content: center; }
+  .fd-btns span { padding: 8px 18px; border-radius: 6px; font-size: 14px; border: 1px solid #bbb; min-width: 88px; text-align: center; }
+  .fd-btns .leave { background: var(--red); border-color: var(--red); color: #fff; font-weight: 600; }
+  .fd-caption { text-align: center; color: var(--muted); font-size: 12.5px; margin-top: 8px; }
+
+  /* ---- success panel ---- */
+  #successPanel { display: none; text-align: center; padding: 30px 20px; }
+  #successPanel .big { font-size: 44px; }
+  #successPanel h2 { color: var(--green); }
+  #successPanel p { color: var(--muted); }
+
+  footer { text-align: center; color: var(--muted); font-size: 13px; margin-top: 30px; }
+  footer button { background: none; border: none; color: var(--red); text-decoration: underline; cursor: pointer; font-size: 13px; }
+</style>
+</head>
+<body>
+
+<div id="statusBar" class="safe">🟢 No unsaved changes — you can close or reload this page freely</div>
+
+<div class="wrap">
+  <header class="hero">
+    <div style="font-size:40px">🍕📸</div>
+    <h1>What the <span class="pz">"Leave site?"</span> warning feels like</h1>
+    <p class="sub">A fake, 100%-client-side demo for the polls.pizza team — no data leaves your browser.</p>
+  </header>
+
+  <div class="explainer">
+    <b>The idea under consideration:</b> once someone has uploaded a photo but hasn't hit submit
+    yet, we add a <code>beforeunload</code> handler so the browser itself warns them if they're
+    about to lose that tab. Try it below — upload a photo (any image on your computer works,
+    it's only shown locally), then try to leave.
+  </div>
+
+  <!-- STEP 1: photo upload -->
+  <section class="card" id="step1">
+    <h2><span class="step">1</span> Add a photo of the line</h2>
+    <p class="hint">Fake upload — the file never leaves this tab.</p>
+
+    <div id="dropzone">
+      <div class="big">📷</div>
+      <div>Drag a photo here, or <span class="bt">browse your files</span></div>
+      <small>JPG, PNG, HEIC — whatever you've got</small>
+    </div>
+    <input type="file" id="fileInput" accept="image/*" hidden>
+
+    <div id="uploadArea">
+      <div class="previewRow">
+        <img id="previewImg" alt="Your photo preview">
+        <div class="upInfo">
+          <div class="upStatus" id="upStatus">Uploading photo… 0%</div>
+          <div class="progressOuter"><div class="progressInner" id="progressBar"></div></div>
+          <button class="removeLink" id="removePhoto" type="button">Remove photo</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 2: the form -->
+  <section class="card" id="step2">
+    <h2><span class="step">2</span> Tell us about the line <span style="font-weight:400;color:var(--muted);font-size:13px">(approximate form)</span></h2>
+    <p class="hint">Nothing here is submitted anywhere — it's all pretend.</p>
+
+    <form id="reportForm" novalidate>
+      <label for="place">Polling place <span class="req">*</span></label>
+      <input type="text" id="place" placeholder="e.g. Riverside Elementary School, Gymnasium">
+
+      <div class="twoCol">
+        <div>
+          <label for="city">City <span class="req">*</span></label>
+          <input type="text" id="city" placeholder="e.g. Columbus">
+        </div>
+        <div>
+          <label for="state">State <span class="req">*</span></label>
+          <select id="state">
+            <option value="">Select…</option>
+            <option>Arizona</option><option>Florida</option><option>Georgia</option>
+            <option>Michigan</option><option>Nevada</option><option>North Carolina</option>
+            <option>Ohio</option><option>Pennsylvania</option><option>Texas</option>
+            <option>Wisconsin</option><option>(somewhere else)</option>
+          </select>
+        </div>
+      </div>
+
+      <label for="wait">How long is the line? <span class="req">*</span></label>
+      <select id="wait">
+        <option value="">Select…</option>
+        <option>No line at all</option>
+        <option>Under 15 minutes</option>
+        <option>15–30 minutes</option>
+        <option>30–60 minutes</option>
+        <option>Over an hour 😬</option>
+      </select>
+
+      <label for="notes">Anything else worth knowing? <span style="font-weight:400;color:var(--muted)">(optional)</span></label>
+      <textarea id="notes" placeholder="e.g. Line wraps around the block, but it's moving."></textarea>
+
+      <label for="name">Your name <span style="font-weight:400;color:var(--muted)">(optional)</span></label>
+      <input type="text" id="name" placeholder="So we can say thanks 🍕">
+
+      <div class="formError" id="formError"></div>
+
+      <div id="submitRow">
+        <button class="btn primary" id="submitBtn" type="submit">Send my report</button>
+        <div class="spinner" id="submitSpin"></div>
+      </div>
+    </form>
+
+    <div id="successPanel">
+      <div class="big">🎉🍕</div>
+      <h2>Report "received"!</h2>
+      <p>(Not really — this is a demo, nothing was sent anywhere.)</p>
+      <p>Notice the banner up top went back to <b style="color:var(--green)">green</b>:<br>
+         the leave-warning is now off, because your photo + report are safely "submitted".</p>
+    </div>
+  </section>
+
+  <!-- STEP 3: try to leave -->
+  <section class="card" id="step3">
+    <h2><span class="step">3</span> Now try to leave 👀</h2>
+    <p class="hint">Only interesting <b>after step 1</b> — that's when the warning arms.</p>
+
+    <div class="leaveBtns">
+      <button class="btn ghost" id="reloadBtn" type="button">🔄 Reload this page</button>
+      <a class="btn ghost" href="https://polls.pizza" id="leaveLink">🍕 Go to polls.pizza</a>
+      <button class="btn ghost" id="closeBtn" type="button">✖️ Close this tab</button>
+    </div>
+    <p class="notes">…or just close the tab yourself, or type a new URL. If the banner is <b>amber</b>, your
+       browser will stop you and ask. Pick "Cancel" to stay, or "Leave" to abandon your photo.</p>
+
+    <div class="fakeDialog">
+      <div class="fd-title">this-page says</div>
+      <div class="fd-body">
+        <div class="fd-ico">⚠️</div>
+        <div class="fd-msg">Leave site?</div>
+        <div class="fd-sub">Changes you made may not be saved.</div>
+      </div>
+      <div class="fd-btns"><span class="leave">Leave</span><span>Cancel</span></div>
+    </div>
+    <div class="fd-caption">↑ Roughly what the real prompt looks like (Chrome, desktop). Every browser writes its own wording.</div>
+
+    <ul class="notes" style="margin-top:16px; margin-bottom:0;">
+      <li>🧾 <b>We can't customize the text.</b> Browsers ignore custom messages and show their own generic "changes may not be saved" line — we can't say "your photo hasn't been sent yet".</li>
+      <li>👆 <b>It only shows after real interaction.</b> Browsers require the user to have interacted with the page — uploading a photo counts, so that's fine here.</li>
+      <li>📱 <b>Mobile is patchy.</b> iOS Safari historically doesn't fire <code>beforeunload</code> (tab swipes/close on mobile often don't prompt at all). Worth testing on the devices we care about before shipping.</li>
+      <li>🤝 <b>It's a speed bump, not a wall.</b> One click on "Leave" and the photo's gone anyway — it's cheap insurance, not a guarantee.</li>
+    </ul>
+  </section>
+
+  <footer>
+    Demo built for a polls.pizza team discussion ·
+    <button type="button" id="resetBtn">Reset the whole demo</button>
+  </footer>
+</div>
+
+<script>
+(function () {
+  // ---------- the actual feature under demo ----------
+  var armed = false;
+  var submitted = false;
+  var uploadDone = false;
+
+  function onBeforeUnload(e) {
+    e.preventDefault();
+    e.returnValue = ''; // required by Chrome for the dialog to show
+    return '';
+  }
+  function arm() {
+    if (armed || submitted) return;
+    window.addEventListener('beforeunload', onBeforeUnload);
+    armed = true;
+    renderStatus();
+  }
+  function disarm() {
+    if (!armed) return;
+    window.removeEventListener('beforeunload', onBeforeUnload);
+    armed = false;
+    renderStatus();
+  }
+  function renderStatus() {
+    var bar = document.getElementById('statusBar');
+    if (armed) {
+      bar.className = 'armed';
+      bar.innerHTML = '<span class="pulse">⚠️ Unsaved photo on this page</span> — leaving now will trigger the browser\'s "Leave site?" prompt';
+    } else {
+      bar.className = 'safe';
+      bar.textContent = submitted
+        ? '🟢 Report submitted — no unsaved changes, leave freely'
+        : '🟢 No unsaved changes — you can close or reload this page freely';
+    }
+  }
+
+  // ---------- fake upload ----------
+  var dropzone = document.getElementById('dropzone');
+  var fileInput = document.getElementById('fileInput');
+  var uploadArea = document.getElementById('uploadArea');
+  var previewImg = document.getElementById('previewImg');
+  var upStatus = document.getElementById('upStatus');
+  var progressBar = document.getElementById('progressBar');
+  var objectUrl = null;
+  var progressTimer = null;
+  var pct = 0;
+
+  dropzone.addEventListener('click', function () { fileInput.click(); });
+  dropzone.addEventListener('dragover', function (e) { e.preventDefault(); dropzone.classList.add('drag'); });
+  dropzone.addEventListener('dragleave', function () { dropzone.classList.remove('drag'); });
+  dropzone.addEventListener('drop', function (e) {
+    e.preventDefault();
+    dropzone.classList.remove('drag');
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) startUpload(e.dataTransfer.files[0]);
+  });
+  fileInput.addEventListener('change', function () {
+    if (fileInput.files && fileInput.files[0]) startUpload(fileInput.files[0]);
+  });
+
+  function startUpload(file) {
+    if (objectUrl) URL.revokeObjectURL(objectUrl);
+    objectUrl = URL.createObjectURL(file);
+    previewImg.src = objectUrl;
+
+    dropzone.style.display = 'none';
+    uploadArea.style.display = 'block';
+    upStatus.className = 'upStatus';
+    pct = 0;
+    progressBar.style.width = '0%';
+    upStatus.textContent = 'Uploading photo… 0%';
+    uploadDone = false;
+
+    clearInterval(progressTimer);
+    progressTimer = setInterval(function () {
+      pct += 4 + Math.floor(Math.random() * 9); // bouncy, network-ish
+      if (pct >= 100) {
+        pct = 100;
+        clearInterval(progressTimer);
+        upStatus.textContent = '✅ Uploaded (demo only — never left your browser)';
+        upStatus.className = 'upStatus done';
+        uploadDone = true;
+        arm(); // ← the moment the real handler would kick in
+      } else {
+        upStatus.textContent = 'Uploading photo… ' + pct + '%';
+      }
+      progressBar.style.width = pct + '%';
+    }, 90);
+  }
+
+  document.getElementById('removePhoto').addEventListener('click', function () {
+    clearInterval(progressTimer);
+    if (objectUrl) { URL.revokeObjectURL(objectUrl); objectUrl = null; }
+    uploadArea.style.display = 'none';
+    dropzone.style.display = 'block';
+    fileInput.value = '';
+    uploadDone = false;
+    disarm();
+  });
+
+  // ---------- fake submit ----------
+  var form = document.getElementById('reportForm');
+  var submitBtn = document.getElementById('submitBtn');
+  var submitSpin = document.getElementById('submitSpin');
+  var formError = document.getElementById('formError');
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    formError.style.display = 'none';
+
+    if (!uploadDone) {
+      formError.textContent = '🍕 Please add a photo first — that\u2019s the whole point of this demo!';
+      formError.style.display = 'block';
+      return;
+    }
+    var missing = [];
+    if (!document.getElementById('place').value.trim()) missing.push('polling place');
+    if (!document.getElementById('city').value.trim()) missing.push('city');
+    if (!document.getElementById('state').value) missing.push('state');
+    if (!document.getElementById('wait').value) missing.push('line length');
+    if (missing.length) {
+      formError.textContent = 'Almost — we still need: ' + missing.join(', ') + '.';
+      formError.style.display = 'block';
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending…';
+    submitSpin.style.display = 'inline-block';
+    setTimeout(function () {
+      submitted = true;
+      disarm();
+      form.style.display = 'none';
+      document.getElementById('successPanel').style.display = 'block';
+    }, 1400);
+  });
+
+  // ---------- leave triggers / reset ----------
+  document.getElementById('reloadBtn').addEventListener('click', function () { location.reload(); });
+  document.getElementById('closeBtn').addEventListener('click', function () { window.close(); });
+
+  document.getElementById('resetBtn').addEventListener('click', function () {
+    if (objectUrl) URL.revokeObjectURL(objectUrl);
+    location.reload(); // safe when disarmed; prompts when armed — which is also a demo 😄
+  });
+
+  renderStatus();
+})();
+</script>
+</body>
+</html>
