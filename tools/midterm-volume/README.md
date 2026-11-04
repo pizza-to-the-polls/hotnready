@@ -67,10 +67,15 @@ Data API, profile `ptp-agent`. (Check that skill first; it's canonical.)
 - **Charts** are inline SVG in the page; the interactive comp + e15 charts are
   vanilla JS with no dependencies. smoke.js covers their runtime behavior
   without a browser (clicks every chip, exercises hovers).
-- **Election-night cron pattern** (refresh.sh): `*/15 * * * *` job that
-  (a) self-removes its own crontab line after a cutoff time, (b) takes a lock
-  with a 10-min staleness escape, (c) never pushes on gen failure. Commit
-  message carries the ET timestamp.
+- **Election-night cron pattern** (refresh.sh): `*/15 * * * *` job that (a) takes a
+  lock with a 10-min staleness escape, (b) never pushes on gen failure, (c) past a
+  cutoff pushes a final refresh and DISARMS via a stop-flag (later ticks no-op).
+  **Do NOT rely on cron editing its own crontab on macOS**: `crontab -` from a
+  cron-spawned process fails with `crontab: tmp/tmp.NNN: Operation not permitted`
+  (verified empirically 2026-11-04 — `crontab -l` works, install doesn't; not fixed
+  by cwd or TMPDIR). On 2026-11-03 the naive self-removal silently no-op'd for 5
+  hours, pushing harmless duplicate "final refresh" commits every 15 min. Remove
+  the schedule line from an interactive shell once the stop-flag is set.
 
 ## Next cycle
 

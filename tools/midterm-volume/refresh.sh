@@ -1,9 +1,11 @@
 #!/bin/bash
 # E-Day 15-min auto-refresh — hotnready /midterm-volume/ (night of 2026-11-03)
-# Re-armed ~8:55pm PT at the user's request, cutoff extended midnight PT → 2:00am PT
-# Nov 4. The tick at/after CUTOFF pushes one FINAL refresh and then removes this
-# job from the crontab (self-disarming). gen.py is the repo-canonical copy in
-# tools/midterm-volume/, pointed at the /tmp working dirs via env overrides.
+# The tick at/after CUTOFF pushes one FINAL refresh, then DISARMS. NOTE: on macOS a
+# cron-spawned process CANNOT edit the crontab (crontab - fails with
+# "crontab: tmp/tmp.NNN: Operation not permitted" — verified empirically 2026-11-04;
+# crontab -l works, install does not). So disarm = STOP-FLAG: the flag makes every
+# later tick a no-op, and the crontab line itself must be removed by a human/agent
+# from an interactive shell (`crontab -l | grep -v refresh.sh | crontab -`).
 export HOME=/Users/duncombe
 export PATH=/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
 LOG=/tmp/hrwork/refresh.log
@@ -13,6 +15,10 @@ export HRPUB=/tmp/hrpub/midterm-volume
 export HROUT=/tmp/hrout/midterm-volume
 STAMP=$(date +%Y%m%d%H%M)
 CUTOFF=202611040200        # Nov 4 02:00 PT
+STOPFLAG=/tmp/hrwork/.stop
+
+# stop-flag: once set (by the final tick), no-op until the crontab line is removed
+if [ -f "$STOPFLAG" ]; then exit 0; fi
 FINAL=""
 [ "$STAMP" -ge "$CUTOFF" ] && FINAL=" — final refresh, cron disarming"
 echo "=== $STAMP run start ($(date))$FINAL" >> "$LOG"
@@ -46,10 +52,16 @@ else
 fi
 rmdir "$LOCK"
 
-# disarm after cutoff — only once the final push has landed
+# disarm after cutoff — set the stop-flag (see header re: macOS crontab), attempt
+# removal anyway in case some environment allows it, log the truth either way
 if [ "$STAMP" -ge "$CUTOFF" ]; then
-  crontab -l 2>/dev/null | grep -v 'hrwork/refresh.sh' | crontab - 2>/dev/null
-  echo "=== $STAMP DISARMED (past $CUTOFF) — good night" >> "$LOG"
+  touch "$STOPFLAG"
+  crontab -l 2>>"$LOG" | grep -v 'hrwork/refresh.sh' | crontab - 2>>"$LOG"
+  if crontab -l 2>/dev/null | grep -q 'hrwork/refresh.sh'; then
+    echo "=== $STAMP STOP-FLAG SET — crontab line still armed (macOS cron cannot self-remove); no-ops from here; remove the line from an interactive shell" >> "$LOG"
+  else
+    echo "=== $STAMP DISARMED (crontab line removed) — good night" >> "$LOG"
+  fi
 fi
 echo "=== $STAMP done ($(date))" >> "$LOG"
 exit 0
