@@ -197,7 +197,7 @@ callout = (f'<div class="callout"><b>{lead}:</b> '
            f'<b>{cum[2022]["rep"]:,} rep / {cum[2022]["ord"]:,} ord / {cum[2022]["don"]:,} don (${cumdol[2022]:,})</b> in 2022 '
            f'<b>{("by the same time of day" if on_eday else "across the full day")}</b>. '
            f'2018 finished E-Day at 2,087 rep · 9,227 don ($312,791); 2022 at 332 rep · 1,496 don ($82,505). '
-           f'Yesterday (E−1) 2026 did 113 rep / 483 don — the biggest pre-E-Day day of any cycle here. {surge}</div>')
+           f'E−1 (Mon Nov 2) did 83 rep / 483 don — the biggest pre-Election-Day day of 2026’s cycle. {surge}</div>')
 e15_section = f'''<h2>Election Day, every 15 minutes — 2026 vs 2018 vs 2022</h2>
 <div class="sub">Same-day shape of the surge: volume bucketed every 15 minutes, US/Eastern (00:00–24:00 ET), on each cycle&rsquo;s Election Day.
 <span class="sw" style="background:{COL[2018]}"></span>2018 &nbsp;<span class="sw" style="background:{COL[2022]}"></span>2022 &nbsp;<span class="sw" style="background:{COL[2026]}"></span>2026 — {('the purple line ends at the data timestamp (' + ASOF_LBL + ' ET, E-Day in progress)' if on_eday else 'the purple line covers the complete day — final E-Day tallies, pulled ' + ASOF_LBL + ' ET' if day_done else 'the purple line covers Election Day (final), pulled ' + ASOF_LBL + ' ET')}.
@@ -268,7 +268,7 @@ i_tbl_end = find_after(i_tbl, lambda l: l.strip() == "</tbody></table>", "table 
 pct = lambda y: round(day(y, ED[y])["rep"] / daterange(y, -45, 30)["rep"] * 100)
 row = lambda *c: "<tr><th>" + c[0] + "</th>" + "".join(f"<td>{x}</td>" for x in c[1:]) + "</tr>"
 table = f'''<table>
-<thead><tr><th>Election</th><th>E-Day reports / orders</th><th>E-Day donations</th><th>E−7→E−1 rep / don</th><th>E−45 → E−8 rep / don<br><span class="mut">(2026: E−45 → today)</span></th><th>Reports on E-Day</th></tr></thead>
+<thead><tr><th>Election</th><th>E-Day reports / orders</th><th>E-Day donations</th><th>E−7→E−1 rep / don</th><th>E−45 → E−8 rep / don<br><span class="mut">(2026: E−45 → E-Day)</span></th><th>Reports on E-Day</th></tr></thead>
 <tbody>
 {row("2018 midterm", "2,087 / 697", "9,227<br><span class='mut'>$312,791</span>", f"{wk18['rep']:,} / {wk18['don']:,}", f"{pre18['rep']:,} / {pre18['don']:,}", f"{pct(2018)}%")}
 {row("2022 midterm", "332 / 189", "1,496<br><span class='mut'>$82,505</span>", f"{wk22['rep']:,} / {wk22['don']:,}", f"{pre22['rep']:,} / {pre22['don']:,}", f"{pct(2022)}%")}
@@ -276,7 +276,7 @@ table = f'''<table>
      f"{today['rep']:,} / {today['ord']:,}<br><span class='mut'>" + ("today so far, as of " if on_eday else "E-Day final, as of ") + ASOF_LBL + " ET</span>",
      f"{today['don']:,}<br><span class='mut'>${today['dol']:,} " + ("so far today" if on_eday else "final") + "</span>",
      f"{wk26['rep']:,} / {wk26['don']:,}<br><span class='mut'>complete (Oct 28–Nov 2)</span>",
-     f"{tot26['rep']:,} / {tot26['don']:,}<br><span class='mut'>${tot26['dol']:,} E−45 → today</span>",
+     f"{tot26['rep']:,} / {tot26['don']:,}<br><span class='mut'>${tot26['dol']:,} E−45 → E-Day</span>",
      "<span class='mut'>TBD<br>(" + ("day in progress" if on_eday else "post-E-Day tail to come") + ")</span>")}
 </tbody></table>'''
 L_[i_tbl:i_tbl_end + 1] = table.split("\n")
