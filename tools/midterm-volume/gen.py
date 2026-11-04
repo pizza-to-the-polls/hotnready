@@ -178,12 +178,19 @@ through = (f'Election Day, {ASOF_LBL} ET (partial)' if ASOF_DT.date() == ED[2026
 sub_hdr = ('Daily counts from production <code>pizzabase</code> (reports, orders, donations tables), bucketed by US/Eastern day. '
            'X-axes aligned on Election Day (E). <b>New: Election Day intraday — every 15 minutes, 2026 vs 2018 vs 2022</b> (next chart). '
            f'2026 data current through {through}. Generated {ASOF_DT.strftime("%a %b %-d, %Y")}.')
-callout = (f'<div class="callout"><b>E-DAY is here (Tue Nov 3, 2026, {ASOF_LBL} ET):</b> today so far 2026 has '
+hr = ASOF_DT.hour  # ET hour
+on_eday = ASOF_DT.date() == ED[2026]
+lead = (f'E-DAY is here (Tue Nov 3, 2026, {ASOF_LBL} ET)' if on_eday
+        else f'E-Day wrap-up (Wed Nov 4, {ASOF_LBL} ET)')
+surge = ("The evening surge (6–10pm ET) is still ahead." if hr < 18 else
+         "The evening surge (6–10pm ET) is underway." if hr < 22 else
+         "The evening surge window (6–10pm ET) has passed.")
+callout = (f'<div class="callout"><b>{lead}:</b> E-Day so far 2026 has '
            f'<b>{today["rep"]:,} reports / {today["ord"]:,} orders / {today["don"]:,} donations (${today["dol"]:,})</b> — versus '
            f'<b>{cum[2018]["rep"]:,} rep / {cum[2018]["ord"]:,} ord / {cum[2018]["don"]:,} don (${cumdol[2018]:,})</b> in 2018 and '
            f'<b>{cum[2022]["rep"]:,} rep / {cum[2022]["ord"]:,} ord / {cum[2022]["don"]:,} don (${cumdol[2022]:,})</b> in 2022 <b>by the same time of day</b>. '
            f'2018 finished E-Day at 2,087 rep · 9,227 don ($312,791); 2022 at 332 rep · 1,496 don ($82,505). '
-           f'Yesterday (E−1) 2026 did 113 rep / 483 don — the biggest pre-E-Day day of any cycle here. The evening surge (6–10pm ET) is still ahead.</div>')
+           f'Yesterday (E−1) 2026 did 113 rep / 483 don — the biggest pre-E-Day day of any cycle here. {surge}</div>')
 e15_section = f'''<h2>Election Day, every 15 minutes — 2026 vs 2018 vs 2022</h2>
 <div class="sub">Same-day shape of the surge: volume bucketed every 15 minutes, US/Eastern (00:00–24:00 ET), on each cycle&rsquo;s Election Day.
 <span class="sw" style="background:{COL[2018]}"></span>2018 &nbsp;<span class="sw" style="background:{COL[2022]}"></span>2022 &nbsp;<span class="sw" style="background:{COL[2026]}"></span>2026 — the purple line ends at the data timestamp ({ASOF_LBL} ET, E-Day in progress).
