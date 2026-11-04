@@ -314,10 +314,13 @@ L_[i_varD] = ('  var D = {"years": [' + y18 + ", " + y22 + ', {"yr": 2026, "colo
 
 # takeaway
 i_take = find_after(i_cal, lambda l: l.startswith('<div class="sub" style="margin-top:14px">Takeaway:'), "takeaway")
+take_2026 = (f'2026 is living it right now: {today["rep"]:,} reports and {today["don"]:,} donations (${today["dol"]:,}) by {ASOF_LBL} ET, '
+             'with the evening close-of-polls surge (6–10pm ET) — the tall spikes in the 15-minute chart above — still ahead.' if on_eday else
+             f'2026 lived it: {today["rep"]:,} reports and {today["don"]:,} donations (${today["dol"]:,}) on E-Day, '
+             'with the evening close-of-polls surge (6–10pm ET) showing as the tall spikes in the 15-minute chart above.')
 L_[i_take] = ('<div class="sub" style="margin-top:14px">Takeaway: midterm demand is overwhelmingly an Election-Day phenomenon — reports ramp only in the final ~4 days, '
               'then spike 10–20×. Donations ramp earlier (~E−10) and hit 4–5× report volume on E-Day ($313K in 2018, $83K in 2022). '
-              f'2026 is living it right now: {today["rep"]:,} reports and {today["don"]:,} donations (${today["dol"]:,}) by {ASOF_LBL} ET, '
-              'with the evening close-of-polls surge (6–10pm ET) — the tall spikes in the 15-minute chart above — still ahead.</div>')
+              f'{take_2026}</div>')
 
 html_new = "\n".join(L_)
 
