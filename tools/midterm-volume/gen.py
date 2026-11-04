@@ -277,7 +277,7 @@ table = f'''<table>
      f"{today['don']:,}<br><span class='mut'>${today['dol']:,} " + ("so far today" if on_eday else "final") + "</span>",
      f"{wk26['rep']:,} / {wk26['don']:,}<br><span class='mut'>complete (Oct 28–Nov 2)</span>",
      f"{tot26['rep']:,} / {tot26['don']:,}<br><span class='mut'>${tot26['dol']:,} E−45 → E-Day</span>",
-     "<span class='mut'>TBD<br>(" + ("day in progress" if on_eday else "post-E-Day tail to come") + ")</span>")}
+     f"{pct(2026)}%<br><span class='mut'>" + ("day in progress" if on_eday else "cycle-to-date (tail still accruing)") + "</span>")}
 </tbody></table>'''
 L_[i_tbl:i_tbl_end + 1] = table.split("\n")
 
